@@ -46,6 +46,9 @@ body {
   font-weight: 700;
   letter-spacing: 3px;
   color: #d8fbe5;
+  text-shadow:
+    0 0 6px rgba(184, 187, 186, 0.45),
+    0 0 14px rgba(0, 0, 0, 0.2);
 }
 
 .brand-icon {
@@ -123,8 +126,13 @@ body {
 .hero-content h1 {
   text-transform: uppercase;
   margin-top: 0;
-  margin-bottom: 12px;
-  line-height: 1.2;
+  margin-bottom: 16px;
+  line-height: 1.12;
+  font-size: 50px;
+  color: #7ff0b7;
+  text-shadow:
+    0 0 6px rgba(127, 240, 183, 0.45),
+    0 0 14px rgba(127, 240, 183, 0.20);
 }
 
 .hero-content p {
@@ -151,7 +159,7 @@ body {
   max-width: 500px;
   max-height: 500px;
   color: #0a584e;
-  filter: brightness(2) opacity(0.8) contrast(0.5);
+  filter: brightness(2.5) opacity(0.9) contrast(0.5);
   opacity: 0.9;
 }
 
@@ -174,7 +182,7 @@ body {
   border: 1px solid #0a584e;
   border-radius: 12px;
   padding: 16px;
-  background-color: #032f2a;
+  background-color: #032722;
   text-align: center;
 }
 
