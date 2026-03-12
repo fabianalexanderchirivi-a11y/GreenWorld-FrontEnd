@@ -1,20 +1,32 @@
 import { Link } from 'react-router-dom'
+import IconoLogo from '../img/IconoLogo.webp'
 
 export default function Menu() {
-  const banner2 = 'https://t3.ftcdn.net/jpg/06/55/70/02/360_F_655700268_KLwcLsPKeGnSUAb19cfcpzz11Lwh7AgR.jpg'
-
   return (
-    <>
-      <header>
-        <img src={banner2} alt="Banner" />
-      </header>
+    <header className="main-header">
+      <div className="brand-block">
+        {/* Puedes reemplazar este círculo por un logo o imagen */}
+        <div className="brand-block">
+          <span className="brand-text">GREEN</span>
+          <div className="brand-icon">
+            <img id="IconoL" src={IconoLogo} alt="Logo Green World" />
+          </div>
+          <span className="brand-text">WORLD</span>
+        </div>
+      </div>
 
-      <nav>
+      <nav className="main-nav" aria-label="Navegación principal">
         <Link to="/">Inicio</Link>
         <Link to="/docentes">Cursos</Link>
         <Link to="/estudiantes">Certificados</Link>
         <Link to="/retos">Retos</Link>
       </nav>
-    </>
+
+      <div className="auth-actions">
+        {/* Personaliza estos botones con acciones reales más adelante */}
+        <button type="button" className="btn btn-outline">Registrarse</button>
+        <button type="button" className="btn btn-solid">Iniciar sesión</button>
+      </div>
+    </header>
   )
 }
