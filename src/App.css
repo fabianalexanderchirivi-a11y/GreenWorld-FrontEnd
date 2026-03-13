@@ -209,3 +209,82 @@ body {
   font-weight: 600;
 }
 
+.mission-vision {
+  margin-top: 40px;
+}
+
+.mission-vision h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.mission-vision h3 {
+  margin-top: 0;
+  color: #7ff0b7;
+}
+
+.mission-vision p {
+  color: #9deccc;
+  font-size: 14px;
+}
+.mission-vision {
+  margin-top: 70px;
+}
+
+.mission-vision h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.mission-vision-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  text-align: center;
+}
+
+.mission-vision h3 {
+  font-size: 22px;
+  margin-bottom: 8px;
+  color: #7ff0b7;
+}
+
+.mission-vision p {
+  font-size: 15px;
+  color: #d8fbe5;
+  max-width: 520px;
+  margin: 0 auto;
+  opacity: 0.65;
+}
+.main-footer {
+  margin-top: 70px;
+  padding: 20px 0;
+  border-top: 1px solid #0a584e;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-brand {
+  color: #9deccc;
+  font-size: 14px;
+}
+
+.footer-nav {
+  display: flex;
+  gap: 16px;
+}
+
+.footer-nav a {
+  text-decoration: none;
+  color: #5be7b8;
+  font-weight: 500;
+}
+
+.footer-nav a:hover {
+  color: #7ff0b7;
+}

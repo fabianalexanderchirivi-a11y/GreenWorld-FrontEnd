@@ -1,7 +1,15 @@
 import React from 'react'
+import Footer from '../components/Footer'
 
 export default function Retos() {
   return (
-    <div>Retos</div>
+    <>
+    <div>retos</div>
+    <Footer />
+    
+    </>
+    
+    
+
   )
 }
