@@ -19,10 +19,17 @@ body {
 
 #root {
   min-height: 100vh;
+  background: transparent;
+}
+
+.app-shell {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 16px 28px;
-  background: transparent;
+}
+
+.route-login {
+  min-height: 100vh;
 }
 
 .main-header {
