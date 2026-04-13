@@ -5,7 +5,6 @@ export default function Menu() {
   return (
     <header className="main-header">
       <div className="brand-block">
-        {/* Puedes reemplazar este círculo por un logo o imagen */}
         <div className="brand-block">
           <span className="brand-text">GREEN</span>
           <div className="brand-icon">
@@ -23,7 +22,6 @@ export default function Menu() {
       </nav>
 
       <div className="auth-actions">
-        {/* Personaliza estos botones con acciones reales más adelante */}
         <button type="button" className="btn btn-outline">Registrarse</button>
         <button type="button" className="btn btn-solid">Iniciar sesión</button>
       </div>
