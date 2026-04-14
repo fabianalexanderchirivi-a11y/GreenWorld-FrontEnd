@@ -1,0 +1,37 @@
+.app-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px 28px;
+}
+
+.route-login {
+  min-height: 100vh;
+}
+
+.btn {
+  border: 1px solid #1fb388;
+  border-radius: 999px;
+  padding: 9px 16px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(6, 30, 24, 0.25);
+}
+
+.btn-solid {
+  background-color: #4cd3a7;
+  color: #05352f;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #b8f6df;
+}

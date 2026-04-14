@@ -1,0 +1,85 @@
+.main-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid #0a584e;
+}
+
+.brand-block {
+  display: flex;
+  align-items: center;
+  gap: 0.5px;
+}
+
+.brand-text {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #d8fbe5;
+  text-shadow:
+    0 0 6px rgba(184, 187, 186, 0.45),
+    0 0 14px rgba(0, 0, 0, 0.2);
+}
+
+.brand-icon {
+  width: 90px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #24b489;
+  border-radius: 80% / 80%;
+}
+
+#IconoL {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  display: block;
+  filter: brightness(0) invert(0) opacity(0.9);
+}
+
+.main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: #5be7b8;
+  font-weight: 600;
+  padding: 8px 10px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.main-nav a:hover {
+  background-color: #0b3933;
+}
+
+.main-nav a.active {
+  color: #dfffee;
+  background: rgba(13, 90, 77, 0.85);
+  box-shadow: 0 0 0 1px rgba(91, 231, 184, 0.15) inset;
+}
+
+.auth-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media (max-width: 640px) {
+  .main-header {
+    justify-content: center;
+  }
+
+  .main-nav,
+  .auth-actions {
+    justify-content: center;
+  }
+}

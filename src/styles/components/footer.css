@@ -1,0 +1,32 @@
+.main-footer {
+  margin-top: 70px;
+  padding: 20px 0;
+  border-top: 1px solid #0a584e;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-brand {
+  color: #9deccc;
+  font-size: 14px;
+}
+
+.footer-nav {
+  display: flex;
+  gap: 16px;
+}
+
+.footer-nav a {
+  text-decoration: none;
+  color: #5be7b8;
+  font-weight: 500;
+}
+
+.footer-nav a:hover {
+  color: #7ff0b7;
+}

@@ -1,36 +1,37 @@
 import { Link } from 'react-router-dom'
-import Footer from '../components/Footer'
+import Footer from '../components/layout/Footer'
 import WorldGreen from '../img/WorldGreen.png'
 import World from '../img/World.webp'
 import Water from '../img/Water.webp'
 import Bin from '../img/Bin.webp'
 import Energy from '../img/Energy.webp'
+import '../styles/pages/home.css'
 
 const highlightedCourses = [
-  { name: 'Reciclaje básico', icon: Bin },
-  { name: 'Energía y ahorro', icon: Energy },
+  { name: 'Reciclaje basico', icon: Bin },
+  { name: 'Energia y ahorro', icon: Energy },
   { name: 'Cuidado del agua', icon: Water },
-  { name: 'Conservación', icon: World },
+  { name: 'Conservacion', icon: World },
 ]
 
 export default function Principal() {
   return (
     <main className="home-base">
-      <section className="hero-base" aria-label="Sección principal">
+      <section className="hero-base" aria-label="Seccion principal">
         <article className="hero-content">
-          <h1>Aprende y actúa por el planeta</h1>
+          <h1>Aprende y actua por el planeta</h1>
           <p>
-            Convierte conocimiento en impacto real: aprende hoy y transforma tu entorno mañana.
+            Convierte conocimiento en impacto real: aprende hoy y transforma tu entorno manana.
           </p>
 
           <div className="hero-buttons">
-            <Link to="/docentes" className="btn btn-solid">Explorar cursos</Link>
+            <Link to="/cursos" className="btn btn-solid">Explorar cursos</Link>
             <Link to="/retos" className="btn btn-outline">Unirme a un reto</Link>
           </div>
         </article>
 
         <aside className="hero-placeholder" aria-label="Espacio para imagen principal">
-          <img src={WorldGreen} id="World" alt="Ilustración del planeta verde" />
+          <img src={WorldGreen} id="World" alt="Ilustracion del planeta verde" />
         </aside>
       </section>
 
@@ -49,34 +50,31 @@ export default function Principal() {
         </div>
       </section>
 
-      <section className="mission-vision" aria-label="Misión y visión">
-
+      <section className="mission-vision" aria-label="Mision y vision">
         <div className="mission-vision-content">
-
           <article>
-            <h3>Misión</h3>
+            <h3>Mision</h3>
             <p>
-              Promover la educación ambiental a través de cursos accesibles y dinámicos que
+              Promover la educacion ambiental a traves de cursos accesibles y dinamicos que
               permitan a las personas comprender la importancia del cuidado del planeta.
-              Buscamos fomentar hábitos sostenibles y acciones responsables
-              que contribuyan a la protección del medio ambiente y al bienestar de las futuras generaciones.
+              Buscamos fomentar habitos sostenibles y acciones responsables
+              que contribuyan a la proteccion del medio ambiente y al bienestar de las futuras generaciones.
             </p>
           </article>
 
           <article>
-            <h3>Visión</h3>
+            <h3>Vision</h3>
             <p>
               Ser una plataforma educativa reconocida por inspirar a las personas a aprender, actuar
               y generar un impacto positivo en su entorno. Aspiramos a construir una comunidad
-              comprometida con la sostenibilidad y la conservación del planeta mediante el
-              conocimiento y la participación activa.
+              comprometida con la sostenibilidad y la conservacion del planeta mediante el
+              conocimiento y la participacion activa.
             </p>
           </article>
-
         </div>
       </section>
-      <Footer />
 
+      <Footer />
     </main>
   )
 }

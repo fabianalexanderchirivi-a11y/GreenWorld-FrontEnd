@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import IconoLogo from '../img/IconoLogo.webp'
 import LoginPlaceholder from '../img/banner2.png'
+import '../styles/pages/login.css'
 
 const MailIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -42,11 +43,11 @@ export default function Login() {
 
         <article className="login-card">
           <h1>Bienvenido de nuevo</h1>
-          <p>Inicia sesión para empezar tu aventura</p>
+          <p>Inicia sesion para empezar tu aventura</p>
 
           <form className="login-form" noValidate>
             <label className="field-group" htmlFor="email">
-              <span>Correo electrónico</span>
+              <span>Correo electronico</span>
               <div className="field-shell">
                 <i className="field-icon"><MailIcon /></i>
                 <input id="email" type="email" name="email" autoComplete="email" />
@@ -54,7 +55,7 @@ export default function Login() {
             </label>
 
             <label className="field-group" htmlFor="password">
-              <span>Contraseña</span>
+              <span>Contrasena</span>
               <div className="field-shell">
                 <i className="field-icon"><LockIcon /></i>
                 <input id="password" type="password" name="password" autoComplete="current-password" />
@@ -66,7 +67,7 @@ export default function Login() {
               <span>Recordarme</span>
             </label>
 
-            <button type="submit" className="btn btn-solid login-submit">Iniciar sesión</button>
+            <button type="submit" className="btn btn-solid login-submit">Iniciar sesion</button>
 
             <button type="button" className="login-google">
               <GoogleIcon />
@@ -75,7 +76,7 @@ export default function Login() {
           </form>
 
           <p className="login-signup">
-            ¿No tienes cuenta? <Link to="/">Crear cuenta</Link>
+            No tienes cuenta? <Link to="/">Crear cuenta</Link>
           </p>
         </article>
       </section>

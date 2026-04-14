@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom'
-import IconoLogo from '../img/IconoLogo.webp'
+import { Link, NavLink } from 'react-router-dom'
+import IconoLogo from '../../img/IconoLogo.webp'
+import '../../styles/components/header.css'
 
-export default function Menu() {
+export default function MainHeader() {
   return (
     <header className="main-header">
       <div className="brand-block">
@@ -14,16 +15,16 @@ export default function Menu() {
         </div>
       </div>
 
-      <nav className="main-nav" aria-label="Navegación principal">
-        <Link to="/">Inicio</Link>
-        <Link to="/docentes">Cursos</Link>
-        <Link to="/estudiantes">Certificados</Link>
-        <Link to="/retos">Retos</Link>
+      <nav className="main-nav" aria-label="Navegacion principal">
+        <NavLink to="/">Inicio</NavLink>
+        <NavLink to="/cursos">Cursos</NavLink>
+        <NavLink to="/estudiantes">Certificados</NavLink>
+        <NavLink to="/retos">Retos</NavLink>
       </nav>
 
       <div className="auth-actions">
         <button type="button" className="btn btn-outline">Registrarse</button>
-        <button type="button" className="btn btn-solid">Iniciar sesión</button>
+        <Link to="/login" className="btn btn-solid">Login</Link>
       </div>
     </header>
   )

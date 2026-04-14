@@ -1,11 +1,11 @@
-import './App.css'
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
-import Menu from './components/Menu'
-import Docentes from './page/Docentes'
-import Estudiantes from './page/Estudiantes'
-import Principal from './page/Principal'
-import Retos from './page/Retos'
-import Login from './page/Login'
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import MainHeader from './components/layout/MainHeader'
+import Cursos from './pages/Cursos'
+import Estudiantes from './pages/Estudiantes'
+import Principal from './pages/Principal'
+import Retos from './pages/Retos'
+import Login from './pages/Login'
+import './styles/layout.css'
 
 function AppContent() {
   const location = useLocation()
@@ -13,10 +13,11 @@ function AppContent() {
 
   return (
     <div className={isLoginRoute ? 'route-login' : 'app-shell'}>
-      {!isLoginRoute && <Menu />}
+      {!isLoginRoute && <MainHeader />}
       <Routes>
         <Route path="/" element={<Principal />} />
-        <Route path="/docentes" element={<Docentes />} />
+        <Route path="/cursos" element={<Cursos />} />
+        <Route path="/docentes" element={<Navigate to="/cursos" replace />} />
         <Route path="/estudiantes" element={<Estudiantes />} />
         <Route path="/retos" element={<Retos />} />
         <Route path="/login" element={<Login />} />
