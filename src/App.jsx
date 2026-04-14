@@ -5,6 +5,7 @@ import Docentes from './page/Docentes'
 import Estudiantes from './page/Estudiantes'
 import Principal from './page/Principal'
 import Retos from './page/Retos'
+import Login from './page/Login'
 
 function AppContent() {
   const location = useLocation()
