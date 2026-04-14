@@ -55,7 +55,7 @@ export default function Login() {
             </label>
 
             <label className="field-group" htmlFor="password">
-              <span>Contrasena</span>
+              <span>Contraseña</span>
               <div className="field-shell">
                 <i className="field-icon"><LockIcon /></i>
                 <input id="password" type="password" name="password" autoComplete="current-password" />
@@ -76,7 +76,7 @@ export default function Login() {
           </form>
 
           <p className="login-signup">
-            No tienes cuenta? <Link to="/">Crear cuenta</Link>
+            No tienes cuenta? <Link to="/register">Crear cuenta</Link>
           </p>
         </article>
       </section>

@@ -25,6 +25,7 @@
   border-radius: 18px;
   position: relative;
   overflow: hidden;
+  min-height: 100%;
 }
 
 .login-side-image {
@@ -33,6 +34,31 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+.login-side-overlay {
+  position: absolute;
+  inset: auto 18px 18px 18px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(108, 227, 180, 0.18);
+  background: linear-gradient(180deg, rgba(4, 32, 26, 0.74), rgba(2, 20, 17, 0.9));
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(4px);
+}
+
+.login-side-overlay strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #e1fff2;
+  font-size: 1rem;
+}
+
+.login-side-overlay p {
+  margin: 0;
+  color: #a9e6c9;
+  line-height: 1.6;
+  font-size: 0.94rem;
 }
 
 .login-card {
@@ -112,6 +138,10 @@
   width: 100%;
 }
 
+.field-shell input::placeholder {
+  color: #7fbda4;
+}
+
 .remember-row {
   display: inline-flex;
   align-items: center;
@@ -126,6 +156,12 @@
   height: 16px;
   accent-color: #4cd3a7;
   cursor: pointer;
+}
+
+.remember-row a {
+  color: #8ef1bf;
+  text-decoration: none;
+  font-weight: 600;
 }
 
 .login-submit {
@@ -156,6 +192,21 @@
   height: 18px;
 }
 
+.login-helper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: -4px;
+}
+
+.login-helper a {
+  color: #8ef1bf;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 .login-signup {
   margin: 20px 0 0;
   font-size: 0.92rem;
@@ -167,6 +218,33 @@
   color: #7ff0b7;
   text-decoration: none;
   font-weight: 700;
+}
+
+.register-page .login-layout {
+  grid-template-columns: minmax(280px, 1.05fr) minmax(340px, 500px);
+}
+
+.register-page .login-card {
+  background: linear-gradient(180deg, rgba(2, 22, 18, 0.96), rgba(3, 30, 24, 0.94));
+}
+
+.register-page .login-card h1 {
+  color: #e6fff4;
+}
+
+.register-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.register-form-grid .field-group-full {
+  grid-column: 1 / -1;
+}
+
+.terms-row {
+  align-items: flex-start;
+  line-height: 1.5;
 }
 
 @media (max-width: 900px) {
@@ -184,5 +262,13 @@
     max-width: 560px;
     width: 100%;
     margin: 0 auto;
+  }
+
+  .register-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .register-form-grid .field-group-full {
+    grid-column: auto;
   }
 }

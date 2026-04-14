@@ -5,15 +5,16 @@ import Estudiantes from './pages/Estudiantes'
 import Principal from './pages/Principal'
 import Retos from './pages/Retos'
 import Login from './pages/Login'
+import Register from './pages/Register'
 import './styles/layout.css'
 
 function AppContent() {
   const location = useLocation()
-  const isLoginRoute = location.pathname === '/login'
+  const isAuthRoute = ['/login', '/register'].includes(location.pathname)
 
   return (
-    <div className={isLoginRoute ? 'route-login' : 'app-shell'}>
-      {!isLoginRoute && <MainHeader />}
+    <div className={isAuthRoute ? 'route-login' : 'app-shell'}>
+      {!isAuthRoute && <MainHeader />}
       <Routes>
         <Route path="/" element={<Principal />} />
         <Route path="/cursos" element={<Cursos />} />
@@ -21,6 +22,7 @@ function AppContent() {
         <Route path="/estudiantes" element={<Estudiantes />} />
         <Route path="/retos" element={<Retos />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </div>
   )

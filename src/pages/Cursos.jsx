@@ -33,8 +33,8 @@ export default function Cursos() {
   return (
     <main className="courses-page">
       <section className="courses-hero">
-        <div>
-          <h1>Aprende con impacto</h1>
+        <div className="courses-hero-content">
+          <h1>APRENDE CON IMPACTO</h1>
           <p>
             Explora contenidos practicos sobre sostenibilidad, cuidado del planeta y acciones
             que puedes aplicar en tu dia a dia.

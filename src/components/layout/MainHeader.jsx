@@ -23,7 +23,7 @@ export default function MainHeader() {
       </nav>
 
       <div className="auth-actions">
-        <button type="button" className="btn btn-outline">Registrarse</button>
+        <Link to="/register" className="btn btn-outline">Registrarse</Link>
         <Link to="/login" className="btn btn-solid">Login</Link>
       </div>
     </header>
