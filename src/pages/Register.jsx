@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import IconoLogo from '../img/IconoLogo.webp'
 import RegisterPlaceholder from '../img/banner2.png'
-import '../styles/pages/login.css'
+import '../styles/login.css'
 
 const UserIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">

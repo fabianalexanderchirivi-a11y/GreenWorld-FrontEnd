@@ -1,4 +1,4 @@
-import '../../styles/components/course-card.css'
+import '../styles/cards.css'
 
 export default function CourseCard({ course }) {
   return (

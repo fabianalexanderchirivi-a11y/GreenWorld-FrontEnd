@@ -1,6 +1,6 @@
 import { Link, NavLink } from 'react-router-dom'
-import IconoLogo from '../../img/IconoLogo.webp'
-import '../../styles/components/header.css'
+import IconoLogo from '../img/IconoLogo.webp'
+import '../styles/header.css'
 
 export default function MainHeader() {
   return (

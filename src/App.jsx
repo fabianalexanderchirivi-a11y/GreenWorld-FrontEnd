@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
-import MainHeader from './components/layout/MainHeader'
+import MainHeader from './components/MainHeader'
 import Cursos from './pages/Cursos'
 import Estudiantes from './pages/Estudiantes'
 import Principal from './pages/Principal'

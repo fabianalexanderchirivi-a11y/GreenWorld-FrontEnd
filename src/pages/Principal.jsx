@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
-import Footer from '../components/layout/Footer'
+import Footer from '../components/Footer'
 import WorldGreen from '../img/WorldGreen.png'
 import World from '../img/World.webp'
 import Water from '../img/Water.webp'
 import Bin from '../img/Bin.webp'
 import Energy from '../img/Energy.webp'
-import '../styles/pages/home.css'
+import '../styles/home.css'
 
 const highlightedCourses = [
   { name: 'Reciclaje basico', icon: Bin },

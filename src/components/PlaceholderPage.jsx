@@ -1,5 +1,5 @@
-import Footer from '../layout/Footer'
-import '../../styles/components/placeholder-page.css'
+import Footer from './Footer'
+import '../styles/placeholder-page.css'
 
 export default function PlaceholderPage({ title, description }) {
   return (

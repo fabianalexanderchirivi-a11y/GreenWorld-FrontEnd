@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import IconoLogo from '../img/IconoLogo.webp'
 import LoginPlaceholder from '../img/banner2.png'
-import '../styles/pages/login.css'
+import '../styles/login.css'
 
 const MailIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
