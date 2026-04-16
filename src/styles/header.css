@@ -12,12 +12,15 @@
   display: flex;
   align-items: center;
   gap: 0.5px;
+  text-decoration: none;
 }
 
 .brand-text {
   margin: 0;
+  font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: 3px;
+  text-transform: uppercase;
   color: #d8fbe5;
   text-shadow:
     0 0 6px rgba(184, 187, 186, 0.45),
@@ -75,6 +78,10 @@
 
 @media (max-width: 640px) {
   .main-header {
+    justify-content: center;
+  }
+
+  .brand-block {
     justify-content: center;
   }
 

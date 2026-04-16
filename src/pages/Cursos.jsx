@@ -2,11 +2,14 @@ import { useState } from 'react'
 import Footer from '../components/Footer'
 import CourseCard from '../components/CourseCard'
 import { courses } from '../data/courses'
+import usePageTitle from '../hooks/usePageTitle'
 import '../styles/cursos.css'
 
 const allCategories = ['Todas', ...new Set(courses.map((course) => course.category))]
 
 export default function Cursos() {
+  usePageTitle('Cursos | Green World')
+
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('Todas')
   const [sortBy, setSortBy] = useState('name')

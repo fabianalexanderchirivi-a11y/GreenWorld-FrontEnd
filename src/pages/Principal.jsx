@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
+import usePageTitle from '../hooks/usePageTitle'
 import WorldGreen from '../img/WorldGreen.png'
 import World from '../img/World.webp'
 import Water from '../img/Water.webp'
@@ -15,6 +16,8 @@ const highlightedCourses = [
 ]
 
 export default function Principal() {
+  usePageTitle('Inicio | Green World')
+
   return (
     <main className="home-base">
       <section className="hero-base" aria-label="Seccion principal">

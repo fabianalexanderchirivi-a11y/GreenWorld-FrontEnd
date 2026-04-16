@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import usePageTitle from '../hooks/usePageTitle'
 import IconoLogo from '../img/IconoLogo.webp'
 import RegisterPlaceholder from '../img/banner2.png'
 import '../styles/login.css'
@@ -22,6 +23,8 @@ const LockIcon = () => (
 )
 
 export default function Register() {
+  usePageTitle('Crear cuenta | Green World')
+
   return (
     <main className="login-page register-page">
       <header className="login-brand" aria-label="Logo Green World">

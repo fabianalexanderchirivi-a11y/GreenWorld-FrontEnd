@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import usePageTitle from '../hooks/usePageTitle'
 import IconoLogo from '../img/IconoLogo.webp'
 import LoginPlaceholder from '../img/banner2.png'
 import '../styles/login.css'
@@ -25,6 +26,8 @@ const GoogleIcon = () => (
 )
 
 export default function Login() {
+  usePageTitle('Iniciar sesion | Green World')
+
   return (
     <main className="login-page">
       <header className="login-brand" aria-label="Logo Green World">

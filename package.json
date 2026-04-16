@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "green-world",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -28,7 +28,7 @@
     "globals": "^16.5.0",
     "vite": "^7.3.1"
   },
-  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "description": "Frontend de Green World.",
   "main": "eslint.config.js",
   "repository": {
     "type": "git",

@@ -2,12 +2,15 @@ import { useState } from 'react'
 import ChallengeCard from '../components/ChallengeCard'
 import Footer from '../components/Footer'
 import { challenges } from '../data/challenges'
+import usePageTitle from '../hooks/usePageTitle'
 import '../styles/retos.css'
 
 const allCategories = ['Todas', ...new Set(challenges.map((challenge) => challenge.category))]
 const allDifficulties = ['Todas', ...new Set(challenges.map((challenge) => challenge.difficulty))]
 
 export default function Retos() {
+  usePageTitle('Retos | Green World')
+
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('Todas')
   const [difficulty, setDifficulty] = useState('Todas')
