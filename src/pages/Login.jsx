@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import api from '../api/api'
 import usePageTitle from '../hooks/usePageTitle'
 import IconoLogo from '../img/IconoLogo.webp'
 import LoginPlaceholder from '../img/banner2.png'
@@ -28,6 +30,55 @@ const GoogleIcon = () => (
 export default function Login() {
   usePageTitle('Iniciar sesion | Green World')
 
+  const navigate = useNavigate()
+
+  const [formulario, setFormulario] = useState({
+    correo: '',
+    contrasena: '',
+    remember: false
+  })
+
+  const [error, setError] = useState('')
+  const [cargando, setCargando] = useState(false)
+
+  const manejarCambio = (e) => {
+    const { name, value, type, checked } = e.target
+
+    setFormulario({
+      ...formulario,
+      [name]: type === 'checkbox' ? checked : value
+    })
+  }
+
+  const iniciarSesion = async (e) => {
+    e.preventDefault()
+    setError('')
+    setCargando(true)
+
+    try {
+      const respuesta = await api.post('/auth/login', {
+        correo: formulario.correo,
+        contrasena: formulario.contrasena
+      })
+
+      const { token, usuario } = respuesta.data
+      const storage = formulario.remember ? localStorage : sessionStorage
+
+      storage.setItem('token', token)
+      storage.setItem('usuario', JSON.stringify(usuario))
+
+      navigate('/cursos')
+    } catch (loginError) {
+      setError(
+        loginError.response?.data?.message ||
+        loginError.response?.data?.mensaje ||
+        'No se pudo iniciar sesion'
+      )
+    } finally {
+      setCargando(false)
+    }
+  }
+
   return (
     <main className="login-page">
       <header className="login-brand" aria-label="Logo Green World">
@@ -48,29 +99,53 @@ export default function Login() {
           <h1>Bienvenido de nuevo</h1>
           <p>Inicia sesion para empezar tu aventura</p>
 
-          <form className="login-form" noValidate>
+          <form className="login-form" noValidate onSubmit={iniciarSesion}>
             <label className="field-group" htmlFor="email">
               <span>Correo electronico</span>
               <div className="field-shell">
                 <i className="field-icon"><MailIcon /></i>
-                <input id="email" type="email" name="email" autoComplete="email" />
+                <input
+                  id="email"
+                  type="email"
+                  name="correo"
+                  autoComplete="email"
+                  value={formulario.correo}
+                  onChange={manejarCambio}
+                />
               </div>
             </label>
 
             <label className="field-group" htmlFor="password">
-              <span>Contraseña</span>
+              <span>Contrasena</span>
               <div className="field-shell">
                 <i className="field-icon"><LockIcon /></i>
-                <input id="password" type="password" name="password" autoComplete="current-password" />
+                <input
+                  id="password"
+                  type="password"
+                  name="contrasena"
+                  autoComplete="current-password"
+                  value={formulario.contrasena}
+                  onChange={manejarCambio}
+                />
               </div>
             </label>
 
             <label className="remember-row" htmlFor="remember">
-              <input id="remember" type="checkbox" name="remember" />
+              <input
+                id="remember"
+                type="checkbox"
+                name="remember"
+                checked={formulario.remember}
+                onChange={manejarCambio}
+              />
               <span>Recordarme</span>
             </label>
 
-            <button type="submit" className="btn btn-solid login-submit">Iniciar sesion</button>
+            {error && <p className="login-error">{error}</p>}
+
+            <button type="submit" className="btn btn-solid login-submit" disabled={cargando}>
+              {cargando ? 'Ingresando...' : 'Iniciar sesion'}
+            </button>
 
             <button type="button" className="login-google">
               <GoogleIcon />
