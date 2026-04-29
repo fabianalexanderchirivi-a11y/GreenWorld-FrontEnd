@@ -67,7 +67,7 @@ export default function Login() {
       storage.setItem('token', token)
       storage.setItem('usuario', JSON.stringify(usuario))
 
-      navigate('/cursos')
+      navigate('/')
     } catch (loginError) {
       setError(
         loginError.response?.data?.message ||
