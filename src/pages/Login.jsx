@@ -28,7 +28,7 @@ const GoogleIcon = () => (
 )
 
 export default function Login() {
-  usePageTitle('Iniciar sesion | Green World')
+  usePageTitle('Iniciar sesión | Green World')
 
   const navigate = useNavigate()
 
