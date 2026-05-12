@@ -78,6 +78,7 @@
 
 .auth-user {
   align-items: center;
+  position: relative;
 }
 
 .user-avatar {
@@ -89,7 +90,20 @@
   border-radius: 999px;
   color: #dfffee;
   background: linear-gradient(135deg, #24b489, #0b6c5d);
+  border: 1px solid rgba(216, 251, 229, 0.2);
   box-shadow: 0 0 0 1px rgba(216, 251, 229, 0.18) inset;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.user-avatar:hover,
+.user-avatar:focus-visible {
+  border-color: rgba(91, 231, 184, 0.72);
+  box-shadow:
+    0 0 0 1px rgba(216, 251, 229, 0.2) inset,
+    0 8px 20px rgba(0, 0, 0, 0.24);
+  transform: translateY(-1px);
+  outline: none;
 }
 
 .user-avatar svg {
@@ -97,9 +111,73 @@
   height: 20px;
 }
 
-.auth-logout {
-  padding: 7px 14px;
-  min-height: auto;
+.user-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 20;
+  min-width: 210px;
+  padding: 10px;
+  border: 1px solid rgba(91, 231, 184, 0.24);
+  border-radius: 8px;
+  background: #062820;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.32);
+}
+
+.user-menu::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 15px;
+  width: 10px;
+  height: 10px;
+  background: #062820;
+  border-left: 1px solid rgba(91, 231, 184, 0.24);
+  border-top: 1px solid rgba(91, 231, 184, 0.24);
+  transform: rotate(45deg);
+}
+
+.user-menu-info {
+  display: grid;
+  gap: 3px;
+  padding: 4px 4px 10px;
+  border-bottom: 1px solid rgba(91, 231, 184, 0.16);
+}
+
+.user-menu-info span {
+  color: #dfffee;
+  font-weight: 700;
+}
+
+.user-menu-info small {
+  max-width: 180px;
+  overflow: hidden;
+  color: #86e6c8;
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-menu-logout {
+  width: 100%;
+  margin-top: 8px;
+  padding: 9px 10px;
+  border: 1px solid rgba(255, 180, 180, 0.24);
+  border-radius: 8px;
+  color: #ffd6d6;
+  background: rgba(255, 80, 80, 0.08);
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.user-menu-logout:hover,
+.user-menu-logout:focus-visible {
+  border-color: rgba(255, 180, 180, 0.55);
+  background: rgba(255, 80, 80, 0.16);
+  outline: none;
 }
 
 @media (max-width: 640px) {
@@ -114,5 +192,15 @@
   .main-nav,
   .auth-actions {
     justify-content: center;
+  }
+
+  .user-menu {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+
+  .user-menu::before {
+    right: calc(50% - 5px);
   }
 }

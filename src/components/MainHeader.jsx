@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import IconoLogo from '../img/IconoLogo.webp'
 import '../styles/header.css'
 
@@ -28,13 +28,10 @@ const obtenerUsuarioGuardado = () => {
 }
 
 export default function MainHeader() {
-  const location = useLocation()
   const navigate = useNavigate()
   const [usuarioGuardado, setUsuarioGuardado] = useState(() => obtenerUsuarioGuardado())
-
-  useEffect(() => {
-    setUsuarioGuardado(obtenerUsuarioGuardado())
-  }, [location.pathname])
+  const [menuUsuarioAbierto, setMenuUsuarioAbierto] = useState(false)
+  const menuUsuarioRef = useRef(null)
 
   useEffect(() => {
     const sincronizarSesion = () => {
@@ -46,12 +43,25 @@ export default function MainHeader() {
     return () => window.removeEventListener('storage', sincronizarSesion)
   }, [])
 
+  useEffect(() => {
+    const cerrarMenuAlClickAfuera = (event) => {
+      if (!menuUsuarioRef.current?.contains(event.target)) {
+        setMenuUsuarioAbierto(false)
+      }
+    }
+
+    document.addEventListener('mousedown', cerrarMenuAlClickAfuera)
+
+    return () => document.removeEventListener('mousedown', cerrarMenuAlClickAfuera)
+  }, [])
+
   const cerrarSesion = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('usuario')
     sessionStorage.removeItem('token')
     sessionStorage.removeItem('usuario')
     setUsuarioGuardado(null)
+    setMenuUsuarioAbierto(false)
     navigate('/')
   }
 
@@ -72,13 +82,29 @@ export default function MainHeader() {
       </nav>
 
       {usuarioGuardado ? (
-        <div className="auth-actions auth-user">
-          <div className="user-avatar" aria-label="Usuario autenticado" title="Usuario autenticado">
+        <div className="auth-actions auth-user" ref={menuUsuarioRef}>
+          <button
+            type="button"
+            className="user-avatar"
+            aria-label="Abrir menu de usuario"
+            aria-expanded={menuUsuarioAbierto}
+            aria-haspopup="menu"
+            title="Usuario autenticado"
+            onClick={() => setMenuUsuarioAbierto((abierto) => !abierto)}
+          >
             <UserIcon />
-          </div>
-          <button type="button" className="btn btn-outline auth-logout" onClick={cerrarSesion}>
-            Salir
           </button>
+          {menuUsuarioAbierto && (
+            <div className="user-menu" role="menu">
+              <div className="user-menu-info">
+                <span>{usuarioGuardado.nombre || 'Usuario'}</span>
+                {usuarioGuardado.correo && <small>{usuarioGuardado.correo}</small>}
+              </div>
+              <button type="button" className="user-menu-logout" role="menuitem" onClick={cerrarSesion}>
+                Salir
+              </button>
+            </div>
+          )}
         </div>
       ) : (
         <div className="auth-actions">

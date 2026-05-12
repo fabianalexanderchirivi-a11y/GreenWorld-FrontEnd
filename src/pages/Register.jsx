@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import api from '../api/api'
 import usePageTitle from '../hooks/usePageTitle'
 import IconoLogo from '../img/IconoLogo.webp'
 import RegisterPlaceholder from '../img/banner2.png'
@@ -25,6 +27,89 @@ const LockIcon = () => (
 export default function Register() {
   usePageTitle('Crear cuenta | Green World')
 
+  const navigate = useNavigate()
+
+  const [formulario, setFormulario] = useState({
+    nombre: '',
+    apellido: '',
+    correo: '',
+    contrasena: '',
+    confirmarContrasena: '',
+    terms: false
+  })
+  const [mensaje, setMensaje] = useState('')
+  const [error, setError] = useState('')
+  const [cargando, setCargando] = useState(false)
+
+  const manejarCambio = (e) => {
+    const { name, value, type, checked } = e.target
+
+    setFormulario({
+      ...formulario,
+      [name]: type === 'checkbox' ? checked : value
+    })
+  }
+
+  const registrarUsuario = async (e) => {
+    e.preventDefault()
+    setMensaje('')
+    setError('')
+
+    if (
+      !formulario.nombre.trim() ||
+      !formulario.apellido.trim() ||
+      !formulario.correo.trim() ||
+      !formulario.contrasena.trim()
+    ) {
+      setError('Todos los campos son obligatorios')
+      return
+    }
+
+    if (formulario.contrasena !== formulario.confirmarContrasena) {
+      setError('Las contrasenas no coinciden')
+      return
+    }
+
+    if (formulario.contrasena.length < 8) {
+      setError('La contrasena debe tener minimo 8 caracteres')
+      return
+    }
+
+    if (!formulario.terms) {
+      setError('Debes aceptar los terminos y condiciones')
+      return
+    }
+
+    setCargando(true)
+
+    try {
+      const respuesta = await api.post('/auth/register', {
+        nombre: formulario.nombre.trim(),
+        apellido: formulario.apellido.trim(),
+        correo: formulario.correo.trim(),
+        contrasena: formulario.contrasena
+      })
+
+      setMensaje(respuesta.data?.message || 'Usuario registrado correctamente')
+      setTimeout(() => {
+        navigate('/login')
+      }, 1200)
+    } catch (registerError) {
+      if (!registerError.response) {
+        setError('No se pudo conectar con el backend. Revisa que este activo en el puerto 4000')
+        return
+      }
+
+      setError(
+        registerError.response?.data?.message ||
+        registerError.response?.data?.mensaje ||
+        'No se pudo registrar el usuario'
+      )
+    } finally {
+      setCargando(false)
+    }
+  }
+
   return (
     <main className="login-page register-page">
       <header className="login-brand" aria-label="Logo Green World">
@@ -48,13 +133,21 @@ export default function Register() {
           <h1>Crea tu cuenta</h1>
           <p>Registrate para aprender, participar y seguir tu progreso ambiental.</p>
 
-          <form className="login-form" noValidate>
+          <form className="login-form" noValidate onSubmit={registrarUsuario}>
             <div className="register-form-grid">
               <label className="field-group" htmlFor="firstName">
                 <span>Nombre</span>
                 <div className="field-shell">
                   <i className="field-icon"><UserIcon /></i>
-                  <input id="firstName" type="text" name="firstName" autoComplete="given-name" placeholder="Tu nombre" />
+                  <input
+                    id="firstName"
+                    type="text"
+                    name="nombre"
+                    autoComplete="given-name"
+                    placeholder="Tu nombre"
+                    value={formulario.nombre}
+                    onChange={manejarCambio}
+                  />
                 </div>
               </label>
 
@@ -62,7 +155,15 @@ export default function Register() {
                 <span>Apellido</span>
                 <div className="field-shell">
                   <i className="field-icon"><UserIcon /></i>
-                  <input id="lastName" type="text" name="lastName" autoComplete="family-name" placeholder="Tu apellido" />
+                  <input
+                    id="lastName"
+                    type="text"
+                    name="apellido"
+                    autoComplete="family-name"
+                    placeholder="Tu apellido"
+                    value={formulario.apellido}
+                    onChange={manejarCambio}
+                  />
                 </div>
               </label>
 
@@ -70,36 +171,71 @@ export default function Register() {
                 <span>Correo electronico</span>
                 <div className="field-shell">
                   <i className="field-icon"><MailIcon /></i>
-                  <input id="registerEmail" type="email" name="email" autoComplete="email" placeholder="tu@correo.com" />
+                  <input
+                    id="registerEmail"
+                    type="email"
+                    name="correo"
+                    autoComplete="email"
+                    placeholder="tu@correo.com"
+                    value={formulario.correo}
+                    onChange={manejarCambio}
+                  />
                 </div>
               </label>
 
               <label className="field-group" htmlFor="registerPassword">
-                <span>Contraseña</span>
+                <span>Contrasena</span>
                 <div className="field-shell">
                   <i className="field-icon"><LockIcon /></i>
-                  <input id="registerPassword" type="password" name="password" autoComplete="new-password" placeholder="Minimo 8 caracteres" />
+                  <input
+                    id="registerPassword"
+                    type="password"
+                    name="contrasena"
+                    autoComplete="new-password"
+                    placeholder="Minimo 8 caracteres"
+                    value={formulario.contrasena}
+                    onChange={manejarCambio}
+                  />
                 </div>
               </label>
 
               <label className="field-group" htmlFor="confirmPassword">
-                <span>Confirmar contraseña</span>
+                <span>Confirmar contrasena</span>
                 <div className="field-shell">
                   <i className="field-icon"><LockIcon /></i>
-                  <input id="confirmPassword" type="password" name="confirmPassword" autoComplete="new-password" placeholder="Repite tu contrasena" />
+                  <input
+                    id="confirmPassword"
+                    type="password"
+                    name="confirmarContrasena"
+                    autoComplete="new-password"
+                    placeholder="Repite tu contrasena"
+                    value={formulario.confirmarContrasena}
+                    onChange={manejarCambio}
+                  />
                 </div>
               </label>
             </div>
 
             <label className="remember-row terms-row" htmlFor="terms">
-              <input id="terms" type="checkbox" name="terms" />
-              <span>Acepto los términos y condiciones para crear mi cuenta.</span>
+              <input
+                id="terms"
+                type="checkbox"
+                name="terms"
+                checked={formulario.terms}
+                onChange={manejarCambio}
+              />
+              <span>Acepto los terminos y condiciones para crear mi cuenta.</span>
             </label>
 
-            <button type="submit" className="btn btn-solid login-submit">Crear cuenta</button>
+            {error && <p className="login-error">{error}</p>}
+            {mensaje && <p className="login-signup">{mensaje}</p>}
+
+            <button type="submit" className="btn btn-solid login-submit" disabled={cargando}>
+              {cargando ? 'Registrando...' : 'Crear cuenta'}
+            </button>
 
             <p className="login-signup">
-              Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
+              Ya tienes cuenta? <Link to="/login">Inicia sesion</Link>
             </p>
           </form>
         </article>
