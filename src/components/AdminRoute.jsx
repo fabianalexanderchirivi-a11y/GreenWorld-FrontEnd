@@ -1,0 +1,18 @@
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import { getStoredToken, getStoredUser } from '../utils/auth'
+
+export default function AdminRoute() {
+  const location = useLocation()
+  const token = getStoredToken()
+  const usuario = getStoredUser()
+
+  if (!token || !usuario) {
+    return <Navigate to="/login" replace state={{ from: location }} />
+  }
+
+  if (usuario.rol !== 'admin') {
+    return <Navigate to="/panel-usuario" replace />
+  }
+
+  return <Outlet />
+}

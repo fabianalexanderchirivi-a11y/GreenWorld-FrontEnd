@@ -41,6 +41,15 @@ export default function Register() {
   const [error, setError] = useState('')
   const [cargando, setCargando] = useState(false)
 
+  const volverAtras = () => {
+    if (window.history.length > 1) {
+      navigate(-1)
+      return
+    }
+
+    navigate('/')
+  }
+
   const manejarCambio = (e) => {
     const { name, value, type, checked } = e.target
 
@@ -96,7 +105,7 @@ export default function Register() {
       }, 1200)
     } catch (registerError) {
       if (!registerError.response) {
-        setError('No se pudo conectar con el backend. Revisa que este activo en el puerto 4000')
+        setError('No se pudo conectar con el servicio. Intenta de nuevo en unos minutos')
         return
       }
 
@@ -112,13 +121,19 @@ export default function Register() {
 
   return (
     <main className="login-page register-page">
-      <header className="login-brand" aria-label="Logo Green World">
-        <span className="brand-text">GREEN</span>
-        <div className="brand-icon">
-          <img id="IconoL" src={IconoLogo} alt="Logo Green World" />
-        </div>
-        <span className="brand-text">WORLD</span>
-      </header>
+      <div className="login-topbar">
+        <button type="button" className="login-back-button" onClick={volverAtras}>
+          Volver
+        </button>
+
+        <header className="login-brand" aria-label="Logo Green World">
+          <span className="brand-text">GREEN</span>
+          <div className="brand-icon">
+            <img id="IconoL" src={IconoLogo} alt="Logo Green World" />
+          </div>
+          <span className="brand-text">WORLD</span>
+        </header>
+      </div>
 
       <section className="login-layout" aria-label="Registro en la plataforma">
         <aside className="login-side" aria-hidden="true">

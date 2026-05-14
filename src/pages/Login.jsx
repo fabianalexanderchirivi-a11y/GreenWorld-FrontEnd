@@ -1,6 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import api from '../api/api'
+import { clearSession } from '../utils/auth'
 import usePageTitle from '../hooks/usePageTitle'
 import IconoLogo from '../img/IconoLogo.webp'
 import LoginPlaceholder from '../img/banner2.png'
@@ -31,6 +32,7 @@ export default function Login() {
   usePageTitle('Iniciar sesión | Green World')
 
   const navigate = useNavigate()
+  const location = useLocation()
 
   const [formulario, setFormulario] = useState({
     correo: '',
@@ -40,6 +42,15 @@ export default function Login() {
 
   const [error, setError] = useState('')
   const [cargando, setCargando] = useState(false)
+
+  const volverAtras = () => {
+    if (window.history.length > 1) {
+      navigate(-1)
+      return
+    }
+
+    navigate('/')
+  }
 
   const manejarCambio = (e) => {
     const { name, value, type, checked } = e.target
@@ -63,11 +74,19 @@ export default function Login() {
 
       const { token, usuario } = respuesta.data
       const storage = formulario.remember ? localStorage : sessionStorage
+      const rol = usuario?.rol || 'usuario'
+      const redirectPath = location.state?.from?.pathname
 
+      clearSession()
       storage.setItem('token', token)
-      storage.setItem('usuario', JSON.stringify(usuario))
+      storage.setItem('usuario', JSON.stringify({ ...usuario, rol }))
 
-      navigate('/')
+      if (redirectPath && redirectPath !== '/login') {
+        navigate(redirectPath, { replace: true })
+        return
+      }
+
+      navigate(rol === 'admin' ? '/admin' : '/panel-usuario', { replace: true })
     } catch (loginError) {
       setError(
         loginError.response?.data?.message ||
@@ -81,13 +100,19 @@ export default function Login() {
 
   return (
     <main className="login-page">
-      <header className="login-brand" aria-label="Logo Green World">
-        <span className="brand-text">GREEN</span>
-        <div className="brand-icon">
-          <img id="IconoL" src={IconoLogo} alt="Logo Green World" />
-        </div>
-        <span className="brand-text">WORLD</span>
-      </header>
+      <div className="login-topbar">
+        <button type="button" className="login-back-button" onClick={volverAtras}>
+          Volver
+        </button>
+
+        <header className="login-brand" aria-label="Logo Green World">
+          <span className="brand-text">GREEN</span>
+          <div className="brand-icon">
+            <img id="IconoL" src={IconoLogo} alt="Logo Green World" />
+          </div>
+          <span className="brand-text">WORLD</span>
+        </header>
+      </div>
 
       <section className="login-layout" aria-label="Acceso a la plataforma">
         <aside className="login-side" aria-hidden="true">

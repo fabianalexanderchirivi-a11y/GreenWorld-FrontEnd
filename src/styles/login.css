@@ -5,12 +5,21 @@
   padding: 26px 16px 32px;
 }
 
+.login-topbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  margin-bottom: 36px;
+}
+
 .login-brand {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0;
-  margin-bottom: 36px;
+  margin-bottom: 0;
 }
 
 .login-layout {
@@ -67,6 +76,33 @@
   background: rgba(2, 22, 18, 0.92);
   box-shadow: 0 16px 28px rgba(0, 0, 0, 0.34), 0 0 0 1px rgba(53, 158, 131, 0.12) inset;
   padding: 34px 30px 28px;
+}
+
+.login-back-button {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 8px 14px;
+  border: 1px solid rgba(91, 231, 184, 0.28);
+  border-radius: 999px;
+  color: #b8f6df;
+  background: rgba(91, 231, 184, 0.08);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.login-back-button:hover,
+.login-back-button:focus-visible {
+  border-color: rgba(91, 231, 184, 0.58);
+  background: rgba(91, 231, 184, 0.14);
+  transform: translateY(calc(-50% - 1px));
+  outline: none;
 }
 
 .login-card h1 {
@@ -280,5 +316,15 @@
 
   .register-form-grid .field-group-full {
     grid-column: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .login-topbar {
+    justify-content: flex-end;
+  }
+
+  .login-back-button {
+    padding-inline: 12px;
   }
 }

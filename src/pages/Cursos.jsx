@@ -1,37 +1,153 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Footer from '../components/Footer'
 import CourseCard from '../components/CourseCard'
-import { courses } from '../data/courses'
+import api from '../api/api'
 import usePageTitle from '../hooks/usePageTitle'
+import { getStoredToken } from '../utils/auth'
 import '../styles/cursos.css'
 
-const allCategories = ['Todas', ...new Set(courses.map((course) => course.category))]
+const getCourseId = (course) => course.id || course.id_curso
+const getCourseName = (course) => course.name || course.titulo || ''
+const getCourseLevel = (course) => course.level || course.nivel || ''
+const getCourseCategory = (course) => course.category || course.categoria || 'General'
 
 export default function Cursos() {
   usePageTitle('Cursos | Green World')
 
+  const navigate = useNavigate()
+  const [courses, setCourses] = useState([])
+  const [courseProgress, setCourseProgress] = useState({})
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const [actionError, setActionError] = useState('')
+  const [startingCourseId, setStartingCourseId] = useState(null)
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('Todas')
   const [sortBy, setSortBy] = useState('name')
 
-  const filteredCourses = courses
+  useEffect(() => {
+    let isMounted = true
+
+    const cargarCursos = async () => {
+      try {
+        const [respuesta, myCoursesResponse] = await Promise.all([
+          api.get('/courses'),
+          getStoredToken()
+            ? api.get('/usuarios/me/cursos').catch(() => ({ data: { data: [] } }))
+            : Promise.resolve({ data: { data: [] } })
+        ])
+        const cursosRespuesta = respuesta.data?.data || respuesta.data || []
+        const misCursos = myCoursesResponse.data?.data || []
+
+        if (isMounted) {
+          setCourses(Array.isArray(cursosRespuesta) ? cursosRespuesta : [])
+          setCourseProgress(
+            Array.isArray(misCursos)
+              ? Object.fromEntries(misCursos.map((course) => [getCourseId(course), course]))
+              : {}
+          )
+          setError('')
+        }
+      } catch (coursesError) {
+        if (isMounted) {
+          setError(
+            coursesError.response?.data?.message ||
+            'No se pudieron cargar los cursos'
+          )
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false)
+        }
+      }
+    }
+
+    cargarCursos()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  const getCourseState = (course) => (
+    courseProgress[getCourseId(course)]?.estado_progreso || 'sin_iniciar'
+  )
+
+  const getActionLabel = (course) => {
+    if (!getStoredToken()) {
+      return 'Iniciar sesion para empezar'
+    }
+
+    const estado = getCourseState(course)
+
+    if (estado === 'en_progreso') {
+      return 'Continuar curso'
+    }
+
+    if (estado === 'terminado') {
+      return 'Curso terminado'
+    }
+
+    return 'Iniciar curso'
+  }
+
+  const handleCourseAction = async (course) => {
+    const idCurso = getCourseId(course)
+
+    if (!getStoredToken()) {
+      navigate('/login')
+      return
+    }
+
+    if (getCourseState(course) !== 'sin_iniciar') {
+      return
+    }
+
+    setStartingCourseId(idCurso)
+    setActionError('')
+
+    try {
+      const respuesta = await api.post(`/cursos/${idCurso}/iniciar`)
+      const progreso = respuesta.data?.data
+
+      setCourseProgress((currentProgress) => ({
+        ...currentProgress,
+        [idCurso]: progreso || {
+          id_curso: idCurso,
+          estado_progreso: 'en_progreso',
+          porcentaje_avance: 0
+        }
+      }))
+    } catch (courseError) {
+      setActionError(courseError.response?.data?.message || 'No se pudo iniciar el curso')
+    } finally {
+      setStartingCourseId(null)
+    }
+  }
+
+  const allCategories = useMemo(() => (
+    ['Todas', ...new Set(courses.map((course) => getCourseCategory(course)))]
+  ), [courses])
+
+  const filteredCourses = useMemo(() => courses
     .filter((course) => {
-      const matchesSearch = course.name.toLowerCase().includes(search.toLowerCase())
-      const matchesCategory = category === 'Todas' || course.category === category
+      const matchesSearch = getCourseName(course).toLowerCase().includes(search.toLowerCase())
+      const matchesCategory = category === 'Todas' || getCourseCategory(course) === category
       return matchesSearch && matchesCategory
     })
     .sort((firstCourse, secondCourse) => {
       if (sortBy === 'level') {
-        const levels = { Basico: 1, Intermedio: 2, Avanzado: 3 }
-        return levels[firstCourse.level] - levels[secondCourse.level]
+        const levels = { basico: 1, intermedio: 2, avanzado: 3 }
+        return (levels[getCourseLevel(firstCourse).toLowerCase()] || 0) - (levels[getCourseLevel(secondCourse).toLowerCase()] || 0)
       }
 
       if (sortBy === 'category') {
-        return firstCourse.category.localeCompare(secondCourse.category)
+        return getCourseCategory(firstCourse).localeCompare(getCourseCategory(secondCourse))
       }
 
-      return firstCourse.name.localeCompare(secondCourse.name)
-    })
+      return getCourseName(firstCourse).localeCompare(getCourseName(secondCourse))
+    }), [category, courses, search, sortBy])
 
   return (
     <main className="courses-page">
@@ -81,11 +197,31 @@ export default function Cursos() {
           <p>{filteredCourses.length} cursos disponibles</p>
         </div>
 
-        <div className="courses-grid">
-          {filteredCourses.map((course) => (
-            <CourseCard key={course.id} course={course} />
-          ))}
-        </div>
+        {loading && <p className="courses-state">Cargando cursos...</p>}
+        {!loading && error && <p className="courses-state courses-state-error">{error}</p>}
+        {!loading && actionError && <p className="courses-state courses-state-error">{actionError}</p>}
+        {!loading && !error && filteredCourses.length === 0 && (
+          <p className="courses-state">
+            No encontramos cursos con esos filtros o aun no hay cursos activos.
+          </p>
+        )}
+        {!loading && !error && filteredCourses.length > 0 && (
+          <div className="courses-grid">
+            {filteredCourses.map((course) => (
+              <CourseCard
+                key={getCourseId(course)}
+                course={course}
+                actionLabel={startingCourseId === getCourseId(course) ? 'Iniciando...' : getActionLabel(course)}
+                actionDisabled={
+                  startingCourseId === getCourseId(course) ||
+                  getCourseState(course) === 'en_progreso' ||
+                  getCourseState(course) === 'terminado'
+                }
+                onAction={() => handleCourseAction(course)}
+              />
+            ))}
+          </div>
+        )}
       </section>
 
       <Footer />
