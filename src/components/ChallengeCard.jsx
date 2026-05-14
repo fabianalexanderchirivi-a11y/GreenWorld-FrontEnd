@@ -1,7 +1,8 @@
 import '../styles/cards.css'
+import { Link } from 'react-router-dom'
 import { resolveImage } from '../utils/imageResolver'
 
-export default function ChallengeCard({ challenge, actionLabel, actionDisabled = false, onAction }) {
+export default function ChallengeCard({ challenge, actionLabel, actionDisabled = false, onAction, detailsTo }) {
   const name = challenge.name || challenge.titulo
   const description = challenge.description || challenge.descripcion
   const objective = challenge.objective || challenge.objetivo
@@ -26,7 +27,11 @@ export default function ChallengeCard({ challenge, actionLabel, actionDisabled =
             <img src={image} alt={name} className="challenge-card-icon" />
           </div>
 
-          <h3>{name}</h3>
+          {detailsTo ? (
+            <Link className="card-title-link" to={detailsTo}>{name}</Link>
+          ) : (
+            <h3>{name}</h3>
+          )}
         </div>
 
         <div className="challenge-card-meta">

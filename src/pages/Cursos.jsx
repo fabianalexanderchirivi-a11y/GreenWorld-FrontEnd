@@ -101,6 +101,9 @@ export default function Cursos() {
     }
 
     if (getCourseState(course) !== 'sin_iniciar') {
+      if (getCourseState(course) === 'en_progreso') {
+        navigate(`/cursos/${idCurso}`)
+      }
       return
     }
 
@@ -214,10 +217,10 @@ export default function Cursos() {
                 actionLabel={startingCourseId === getCourseId(course) ? 'Iniciando...' : getActionLabel(course)}
                 actionDisabled={
                   startingCourseId === getCourseId(course) ||
-                  getCourseState(course) === 'en_progreso' ||
                   getCourseState(course) === 'terminado'
                 }
                 onAction={() => handleCourseAction(course)}
+                detailsTo={`/cursos/${getCourseId(course)}`}
               />
             ))}
           </div>

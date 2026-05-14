@@ -133,6 +133,9 @@ export default function Retos() {
     }
 
     if (getChallengeState(challenge) !== 'sin_iniciar') {
+      if (getChallengeState(challenge) === 'en_progreso') {
+        navigate(`/retos/${idReto}`)
+      }
       return
     }
 
@@ -225,10 +228,10 @@ export default function Retos() {
                 actionLabel={startingChallengeId === getChallengeId(challenge) ? 'Iniciando...' : getActionLabel(challenge)}
                 actionDisabled={
                   startingChallengeId === getChallengeId(challenge) ||
-                  getChallengeState(challenge) === 'en_progreso' ||
                   getChallengeState(challenge) === 'terminado'
                 }
                 onAction={() => handleChallengeAction(challenge)}
+                detailsTo={`/retos/${getChallengeId(challenge)}`}
               />
             ))}
           </div>

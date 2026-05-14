@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import api from '../../api/api'
 import usePageTitle from '../../hooks/usePageTitle'
 import '../../styles/admin.css'
 
@@ -23,6 +25,50 @@ const UsersIcon = () => (
 export default function AdminDashboard() {
   usePageTitle('Panel Admin | Green World')
 
+  const [stats, setStats] = useState({
+    cursos: null,
+    retos: null,
+    usuarios: null
+  })
+
+  useEffect(() => {
+    let mounted = true
+
+    const cargarEstadisticas = async () => {
+      const [coursesResponse, retosResponse, usersResponse] = await Promise.allSettled([
+        api.get('/courses/admin'),
+        api.get('/retos/admin'),
+        api.get('/users')
+      ])
+
+      if (!mounted) {
+        return
+      }
+
+      const courses = coursesResponse.status === 'fulfilled' && Array.isArray(coursesResponse.value.data?.data)
+        ? coursesResponse.value.data.data
+        : []
+      const retos = retosResponse.status === 'fulfilled' && Array.isArray(retosResponse.value.data?.data)
+        ? retosResponse.value.data.data
+        : []
+      const users = usersResponse.status === 'fulfilled' && Array.isArray(usersResponse.value.data?.data)
+        ? usersResponse.value.data.data
+        : []
+
+      setStats({
+        cursos: courses.filter((course) => String(course.estado || '').toLowerCase() !== 'inactivo').length,
+        retos: retos.filter((reto) => String(reto.estado || '').toLowerCase() !== 'inactivo').length,
+        usuarios: users.length
+      })
+    }
+
+    cargarEstadisticas()
+
+    return () => {
+      mounted = false
+    }
+  }, [])
+
   return (
     <main className="admin-page">
       <section className="admin-header">
@@ -33,15 +79,27 @@ export default function AdminDashboard() {
       <section className="admin-actions-grid" aria-label="Acciones administrativas">
         <Link to="/admin/cursos" className="admin-action">
           <span className="admin-action-icon"><BookIcon /></span>
-          <span>Cursos</span>
+          <span className="admin-action-content">
+            <strong>Cursos</strong>
+            <small>Gestiona el catalogo de cursos ambientales.</small>
+            <em>{stats.cursos ?? '-'} cursos activos</em>
+          </span>
         </Link>
         <Link to="/admin/retos" className="admin-action">
           <span className="admin-action-icon"><TrophyIcon /></span>
-          <span>Retos</span>
+          <span className="admin-action-content">
+            <strong>Retos</strong>
+            <small>Crea y administra retos sostenibles.</small>
+            <em>{stats.retos ?? '-'} retos activos</em>
+          </span>
         </Link>
         <Link to="/admin/usuarios" className="admin-action">
           <span className="admin-action-icon"><UsersIcon /></span>
-          <span>Usuarios</span>
+          <span className="admin-action-content">
+            <strong>Usuarios</strong>
+            <small>Consulta usuarios registrados y estados.</small>
+            <em>{stats.usuarios ?? '-'} usuarios registrados</em>
+          </span>
         </Link>
       </section>
     </main>

@@ -3,6 +3,8 @@ import MainHeader from './components/MainHeader'
 import Cursos from './pages/Cursos'
 import Principal from './pages/Principal'
 import Retos from './pages/Retos'
+import CursoDetalle from './pages/CursoDetalle'
+import RetoDetalle from './pages/RetoDetalle'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import PanelUsuario from './pages/PanelUsuario'
@@ -34,8 +36,10 @@ function AppContent() {
       <Routes>
         <Route path="/" element={homeElement} />
         <Route path="/cursos" element={<Cursos />} />
+        <Route path="/cursos/:id" element={<CursoDetalle />} />
         <Route path="/docentes" element={<Navigate to="/cursos" replace />} />
         <Route path="/retos" element={<Retos />} />
+        <Route path="/retos/:id" element={<RetoDetalle />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route element={<ProtectedRoute />}>

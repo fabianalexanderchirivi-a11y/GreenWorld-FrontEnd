@@ -101,6 +101,10 @@ export default function AdminRetos() {
   }
 
   const desactivarReto = async (id) => {
+    if (!window.confirm('Seguro que deseas desactivar este reto?')) {
+      return
+    }
+
     setError('')
     setMessage('')
 
@@ -138,7 +142,11 @@ export default function AdminRetos() {
             </select>
           </label>
           <label>Categoria<input name="categoria" value={form.categoria} onChange={handleChange} /></label>
-          <label>Imagen<input name="imagen" value={form.imagen} onChange={handleChange} placeholder="Residue.webp" /></label>
+          <label>
+            Imagen o nombre de archivo
+            <input name="imagen" value={form.imagen} onChange={handleChange} placeholder="Ejemplo: Residue.webp o https://..." />
+            <small>Puedes usar el nombre de una imagen existente o una URL.</small>
+          </label>
           <label>Estado
             <select name="estado" value={form.estado} onChange={handleChange}>
               <option value="activo">activo</option>
@@ -166,7 +174,8 @@ export default function AdminRetos() {
       )}
 
       {retos.length > 0 && (
-        <div className="admin-table" role="table" aria-label="Retos">
+        <div className="admin-table-wrap">
+          <div className="admin-table" role="table" aria-label="Retos">
           <div className="admin-table-row admin-table-head" role="row">
             <span>Titulo</span>
             <span>Categoria</span>
@@ -188,6 +197,7 @@ export default function AdminRetos() {
               </span>
             </div>
           ))}
+          </div>
         </div>
       )}
     </main>

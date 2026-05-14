@@ -49,7 +49,7 @@ const getEstadoText = (item) => {
   return item?.estado || 'En progreso'
 }
 
-function ProgressSection({ title, items, emptyMessage, detailResolver, actionLabel, actionTo }) {
+function ProgressSection({ title, items, emptyMessage, detailResolver, actionLabel, actionTo, emptyActionLabel, emptyActionTo }) {
   return (
     <section className="profile-section">
       <h3>{title}</h3>
@@ -72,7 +72,14 @@ function ProgressSection({ title, items, emptyMessage, detailResolver, actionLab
           ))}
         </div>
       ) : (
-        <p className="profile-empty">{emptyMessage}</p>
+        <div className="profile-empty-block">
+          <p className="profile-empty">{emptyMessage}</p>
+          {emptyActionLabel && emptyActionTo && (
+            <Link className="profile-item-action" to={emptyActionTo}>
+              {emptyActionLabel}
+            </Link>
+          )}
+        </div>
       )}
     </section>
   )
@@ -205,6 +212,8 @@ export default function UserAccountPanel({ mode = 'panel' }) {
                   detailResolver={(course) => `${Number(course.porcentaje_avance || 0)}% de avance`}
                   actionLabel="Continuar"
                   actionTo="/mis-cursos"
+                  emptyActionLabel="Explorar cursos"
+                  emptyActionTo="/cursos"
                 />
                 <ProgressSection
                   title="Cursos terminados"
@@ -219,6 +228,8 @@ export default function UserAccountPanel({ mode = 'panel' }) {
                   detailResolver={(reto) => reto.dificultad || 'En progreso'}
                   actionLabel="Ver reto"
                   actionTo="/mis-retos"
+                  emptyActionLabel="Ver retos disponibles"
+                  emptyActionTo="/retos"
                 />
                 <ProgressSection
                   title="Retos terminados"

@@ -32,18 +32,18 @@
 }
 
 .admin-action {
-  min-height: 110px;
+  min-height: 150px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
-  gap: 6px;
+  gap: 14px;
   padding: 20px;
   border: 1px solid rgba(12, 96, 79, 0.72);
   border-radius: 8px;
   color: #dffff2;
   background: rgba(3, 27, 22, 0.82);
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .admin-action-icon {
@@ -64,12 +64,33 @@
 }
 
 .admin-action strong {
-  font-size: 2rem;
+  color: #effff7;
+  font-size: 1.28rem;
+  font-weight: 700;
 }
 
-.admin-action span {
+.admin-action-content {
+  display: grid;
+  gap: 8px;
+}
+
+.admin-action-content small {
   color: #abebcf;
-  font-weight: 600;
+  font-size: 0.94rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.admin-action-content em {
+  width: fit-content;
+  padding: 6px 10px;
+  border: 1px solid rgba(91, 231, 184, 0.24);
+  border-radius: 999px;
+  color: #abebcf;
+  background: rgba(91, 231, 184, 0.08);
+  font-size: 0.84rem;
+  font-style: normal;
+  font-weight: 700;
 }
 
 .admin-form {
@@ -87,7 +108,12 @@
   display: grid;
   gap: 8px;
   color: #b5f1d7;
-  font-weight: 700;
+  font-weight: 600;
+}
+
+.admin-form small {
+  color: #86d6b8;
+  font-weight: 500;
 }
 
 .admin-form input,
@@ -138,6 +164,12 @@
   gap: 8px;
 }
 
+.admin-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
 .admin-table-row {
   display: grid;
   grid-template-columns: minmax(180px, 1.2fr) minmax(120px, 0.8fr) minmax(110px, 0.7fr) minmax(100px, 0.7fr) minmax(190px, 1fr);
@@ -150,13 +182,43 @@
   color: #dffff2;
 }
 
+.admin-filters {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) repeat(2, minmax(160px, 0.4fr));
+  gap: 14px;
+  margin-bottom: 18px;
+  padding: 16px;
+  border: 1px solid rgba(12, 96, 79, 0.72);
+  border-radius: 8px;
+  background: rgba(3, 27, 22, 0.82);
+}
+
+.admin-filters label {
+  display: grid;
+  gap: 8px;
+  color: #b5f1d7;
+  font-weight: 600;
+}
+
+.admin-filters input,
+.admin-filters select {
+  width: 100%;
+  height: 44px;
+  border: 1px solid #1b6d5e;
+  border-radius: 8px;
+  background: rgba(6, 44, 35, 0.78);
+  color: #e0fff0;
+  padding: 0 12px;
+  outline: none;
+}
+
 .admin-table-four {
   grid-template-columns: minmax(180px, 1.2fr) minmax(180px, 1fr) minmax(100px, 0.6fr) minmax(100px, 0.6fr);
 }
 
 .admin-table-head {
   color: #8fd8b9;
-  font-weight: 800;
+  font-weight: 700;
   background: rgba(6, 44, 35, 0.86);
 }
 
@@ -169,11 +231,12 @@
   margin: 0 0 12px;
   color: #dffff2;
   font-size: 1.35rem;
+  font-weight: 700;
 }
 
 .user-progress-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   gap: 14px;
 }
 
@@ -186,9 +249,51 @@
   background: rgba(3, 27, 22, 0.82);
 }
 
+.user-progress-card-visual {
+  grid-template-columns: 150px minmax(0, 1fr);
+  grid-template-areas:
+    "image body"
+    "image meta"
+    "image bar"
+    "image actions";
+  align-items: center;
+  column-gap: 18px;
+  overflow: hidden;
+  padding: 16px;
+}
+
+.user-progress-image {
+  grid-area: image;
+  width: 150px;
+  height: 150px;
+  min-height: 150px;
+  padding: 12px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: rgba(2, 20, 17, 0.72);
+}
+
+.user-progress-body {
+  grid-area: body;
+}
+
+.user-progress-card-visual .user-progress-meta {
+  grid-area: meta;
+}
+
+.user-progress-card-visual .progress-bar {
+  grid-area: bar;
+}
+
+.user-progress-card-visual .user-progress-badge,
+.user-progress-card-visual .user-progress-actions {
+  grid-area: actions;
+}
+
 .user-progress-card h3 {
   margin: 0 0 8px;
   color: #effff7;
+  font-weight: 700;
 }
 
 .user-progress-card p {
@@ -212,13 +317,27 @@
   border: 1px solid rgba(91, 231, 184, 0.34);
   border-radius: 999px;
   color: #dffff2;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .user-progress-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+.progress-bar {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(191, 255, 226, 0.12);
+}
+
+.progress-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #4cd3a7, #9df2c4);
 }
 
 .profile-panel {
@@ -245,7 +364,7 @@
   border-radius: 8px;
   color: #9be6c7;
   text-decoration: none;
-  font-weight: 800;
+  font-weight: 700;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
@@ -316,7 +435,7 @@
 
 .profile-email {
   color: #8fe5bd;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .profile-created {
@@ -349,7 +468,7 @@
 
 .profile-stat span {
   color: #abebcf;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .profile-sections {
@@ -394,10 +513,11 @@
 .profile-item-image {
   width: 100%;
   height: 96px;
+  padding: 8px;
   border-radius: 8px;
   border: 1px solid rgba(91, 231, 184, 0.18);
   background: rgba(2, 20, 17, 0.72);
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .profile-item-content {
@@ -420,7 +540,7 @@
 
 .profile-item small {
   color: #7dd9b7;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .profile-item-action {
@@ -432,12 +552,18 @@
   color: #06241f;
   background: #4cd3a7;
   font-size: 0.86rem;
-  font-weight: 800;
+  font-weight: 700;
   text-decoration: none;
 }
 
 .profile-empty {
   margin: 0;
+}
+
+.profile-empty-block {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
 }
 
 @media (max-width: 760px) {
@@ -448,6 +574,10 @@
 
   .admin-table-row,
   .admin-table-four {
+    min-width: 720px;
+  }
+
+  .admin-filters {
     grid-template-columns: 1fr;
   }
 
@@ -475,6 +605,26 @@
 
   .profile-item-image {
     height: 82px;
+  }
+
+  .user-progress-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .user-progress-card-visual {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "image"
+      "body"
+      "meta"
+      "bar"
+      "actions";
+  }
+
+  .user-progress-image {
+    width: 100%;
+    height: 180px;
+    min-height: 0;
   }
 }
 

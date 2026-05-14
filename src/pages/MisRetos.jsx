@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import api from '../api/api'
 import usePageTitle from '../hooks/usePageTitle'
+import { resolveImage } from '../utils/imageResolver'
 import '../styles/admin.css'
 
 export default function MisRetos() {
@@ -52,18 +54,19 @@ export default function MisRetos() {
   }
 
   const renderRetoCard = (reto) => (
-    <article className="user-progress-card" key={reto.id_usuario_reto || reto.id_reto}>
-      <div>
+    <article className="user-progress-card user-progress-card-visual" key={reto.id_usuario_reto || reto.id_reto}>
+      <img className="user-progress-image" src={resolveImage(reto.imagen || reto.image)} alt={reto.titulo} />
+      <div className="user-progress-body">
         <h3>{reto.titulo}</h3>
-        <p>{reto.descripcion}</p>
+        <p>{reto.descripcion || reto.objetivo}</p>
       </div>
       <div className="user-progress-meta">
-        <span>{reto.estado_progreso === 'terminado' ? 'Terminado' : 'En progreso'}</span>
+        <span>Estado: {reto.estado_progreso === 'terminado' ? 'Terminado' : 'En progreso'}</span>
         <strong>{reto.dificultad || 'Basico'}</strong>
       </div>
       {reto.estado_progreso === 'en_progreso' ? (
         <div className="user-progress-actions">
-          <button type="button" className="btn btn-solid">Continuar</button>
+          <Link to={`/retos/${reto.id_reto}`} className="btn btn-solid">Ver reto</Link>
           <button
             type="button"
             className="btn btn-outline"

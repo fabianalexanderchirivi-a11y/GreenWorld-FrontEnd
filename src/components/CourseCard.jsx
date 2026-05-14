@@ -1,4 +1,5 @@
 import '../styles/cards.css'
+import { Link } from 'react-router-dom'
 import { resolveImage } from '../utils/imageResolver'
 
 const formatText = (text) => {
@@ -9,7 +10,7 @@ const formatText = (text) => {
   return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase()
 }
 
-export default function CourseCard({ course, actionLabel, actionDisabled = false, onAction }) {
+export default function CourseCard({ course, actionLabel, actionDisabled = false, onAction, detailsTo }) {
   const name = course.name || course.titulo
   const description = course.description || course.descripcion
   const level = course.level || course.nivel
@@ -29,7 +30,11 @@ export default function CourseCard({ course, actionLabel, actionDisabled = false
             <img src={image} alt={name} className="courses-card-icon" />
           </div>
 
-          <h3>{name}</h3>
+          {detailsTo ? (
+            <Link className="card-title-link" to={detailsTo}>{name}</Link>
+          ) : (
+            <h3>{name}</h3>
+          )}
         </div>
 
         <div className="courses-card-meta">

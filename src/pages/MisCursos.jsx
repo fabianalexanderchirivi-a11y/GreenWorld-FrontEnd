@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import api from '../api/api'
 import usePageTitle from '../hooks/usePageTitle'
+import { resolveImage } from '../utils/imageResolver'
 import '../styles/admin.css'
 
 export default function MisCursos() {
@@ -51,19 +53,26 @@ export default function MisCursos() {
     }
   }
 
-  const renderCourseCard = (course) => (
-    <article className="user-progress-card" key={course.id_inscripcion || course.id_curso}>
-      <div>
+  const renderCourseCard = (course) => {
+    const progress = Number(course.porcentaje_avance || (course.estado_progreso === 'terminado' ? 100 : 0))
+
+    return (
+    <article className="user-progress-card user-progress-card-visual" key={course.id_inscripcion || course.id_curso}>
+      <img className="user-progress-image" src={resolveImage(course.imagen || course.image)} alt={course.titulo} />
+      <div className="user-progress-body">
         <h3>{course.titulo}</h3>
         <p>{course.descripcion}</p>
       </div>
       <div className="user-progress-meta">
-        <span>{course.estado_progreso === 'terminado' ? 'Terminado' : 'En progreso'}</span>
-        <strong>{Number(course.porcentaje_avance || 0)}%</strong>
+        <span>Estado: {course.estado_progreso === 'terminado' ? 'Terminado' : 'En progreso'}</span>
+        <strong>{progress}%</strong>
+      </div>
+      <div className="progress-bar" aria-label={`Avance ${progress}%`}>
+        <span style={{ width: `${Math.min(progress, 100)}%` }} />
       </div>
       {course.estado_progreso === 'en_progreso' ? (
         <div className="user-progress-actions">
-          <button type="button" className="btn btn-solid">Continuar</button>
+          <Link to={`/cursos/${course.id_curso}`} className="btn btn-solid">Continuar</Link>
           <button
             type="button"
             className="btn btn-outline"
@@ -77,7 +86,8 @@ export default function MisCursos() {
         <span className="user-progress-badge">Terminado</span>
       )}
     </article>
-  )
+    )
+  }
 
   return (
     <main className="admin-page">

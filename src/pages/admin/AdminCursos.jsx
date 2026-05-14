@@ -33,6 +33,10 @@ export default function AdminCursos() {
   }, [])
 
   const desactivarCurso = async (id) => {
+    if (!window.confirm('Seguro que deseas desactivar este curso?')) {
+      return
+    }
+
     setMessage('')
     setError('')
 
@@ -64,7 +68,8 @@ export default function AdminCursos() {
       )}
 
       {courses.length > 0 && (
-        <div className="admin-table" role="table" aria-label="Cursos">
+        <div className="admin-table-wrap">
+          <div className="admin-table" role="table" aria-label="Cursos">
           <div className="admin-table-row admin-table-head" role="row">
             <span>Titulo</span>
             <span>Categoria</span>
@@ -86,6 +91,7 @@ export default function AdminCursos() {
               </span>
             </div>
           ))}
+          </div>
         </div>
       )}
     </main>

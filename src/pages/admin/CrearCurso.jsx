@@ -52,7 +52,11 @@ export default function CrearCurso() {
       <form className="admin-form" onSubmit={handleSubmit}>
         <label>Titulo<input name="titulo" value={form.titulo} onChange={handleChange} required /></label>
         <label>Descripcion<textarea name="descripcion" value={form.descripcion} onChange={handleChange} required /></label>
-        <label>Imagen<input name="imagen" value={form.imagen} onChange={handleChange} placeholder="Bin.webp" /></label>
+        <label>
+          Imagen o nombre de archivo
+          <input name="imagen" value={form.imagen} onChange={handleChange} placeholder="Ejemplo: reciclaje.webp o https://..." />
+          <small>Puedes usar el nombre de una imagen existente o una URL.</small>
+        </label>
         <label>Duracion estimada<input name="duracion_estimada" value={form.duracion_estimada} onChange={handleChange} placeholder="2 horas" /></label>
         <label>Nivel
           <select name="nivel" value={form.nivel} onChange={handleChange}>
@@ -71,9 +75,14 @@ export default function CrearCurso() {
         </label>
 
         {error && <p className="admin-state admin-error">{error}</p>}
-        <button type="submit" className="btn btn-solid" disabled={loading}>
-          {loading ? 'Guardando...' : 'Guardar curso'}
-        </button>
+        <div className="admin-form-actions">
+          <button type="submit" className="btn btn-solid" disabled={loading}>
+            {loading ? 'Guardando...' : 'Guardar curso'}
+          </button>
+          <button type="button" className="btn btn-outline" onClick={() => navigate('/admin/cursos')}>
+            Cancelar
+          </button>
+        </div>
       </form>
     </main>
   )

@@ -118,7 +118,7 @@
   color: #05352f;
   background-color: #4cd3a7;
   font: inherit;
-  font-weight: 800;
+  font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
@@ -165,7 +165,7 @@
 
 .user-menu-info span {
   color: #dfffee;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .user-menu-info small {
@@ -186,7 +186,7 @@
   color: #ffd6d6;
   background: rgba(255, 80, 80, 0.08);
   font: inherit;
-  font-weight: 700;
+  font-weight: 600;
   text-align: left;
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease;
@@ -200,7 +200,7 @@
   border-radius: 8px;
   color: #dfffee;
   background: rgba(91, 231, 184, 0.08);
-  font-weight: 700;
+  font-weight: 600;
   text-decoration: none;
 }
 
