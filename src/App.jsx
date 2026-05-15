@@ -9,6 +9,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import PanelUsuario from './pages/PanelUsuario'
 import Perfil from './pages/Perfil'
+import EditarPerfil from './pages/EditarPerfil'
 import MisCursos from './pages/MisCursos'
 import MisRetos from './pages/MisRetos'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -19,6 +20,7 @@ import CrearCurso from './pages/admin/CrearCurso'
 import EditarCurso from './pages/admin/EditarCurso'
 import AdminRetos from './pages/admin/AdminRetos'
 import AdminUsuarios from './pages/admin/AdminUsuarios'
+import AdminInscripciones from './pages/admin/AdminInscripciones'
 import { getStoredUser } from './utils/auth'
 import './styles/layout.css'
 
@@ -45,6 +47,7 @@ function AppContent() {
         <Route element={<ProtectedRoute />}>
           <Route path="/panel-usuario" element={<PanelUsuario />} />
           <Route path="/perfil" element={<Perfil />} />
+          <Route path="/editar-perfil" element={<EditarPerfil />} />
           <Route path="/mis-cursos" element={<MisCursos />} />
           <Route path="/mis-retos" element={<MisRetos />} />
         </Route>
@@ -55,6 +58,7 @@ function AppContent() {
           <Route path="/admin/cursos/editar/:id" element={<EditarCurso />} />
           <Route path="/admin/retos" element={<AdminRetos />} />
           <Route path="/admin/usuarios" element={<AdminUsuarios />} />
+          <Route path="/admin/inscripciones" element={<AdminInscripciones />} />
         </Route>
       </Routes>
     </div>

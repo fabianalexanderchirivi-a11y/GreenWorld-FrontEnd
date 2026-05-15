@@ -12,14 +12,17 @@ const getProgressLabel = (estado) => {
   if (estado === 'en_progreso') return 'En progreso'
   return 'Sin iniciar'
 }
+const formatLevel = (level) => (
+  level === 'basico' || level === 'Basico' ? 'Básico' : level
+)
 const fallbackModules = [
-  { id_modulo: 'intro', titulo: 'Introduccion' },
+  { id_modulo: 'intro', titulo: 'Introducción' },
   { id_modulo: 'concepts', titulo: 'Conceptos principales' },
   { id_modulo: 'activity', titulo: 'Actividad final' }
 ]
 
 export default function CursoDetalle() {
-  usePageTitle('Detalle de curso | Green World')
+  usePageTitle('Detalle de curso')
 
   const { id } = useParams()
   const navigate = useNavigate()
@@ -200,17 +203,17 @@ export default function CursoDetalle() {
             </div>
           </article>
 
-          <section className="course-info-grid" aria-label="Informacion del curso">
+          <section className="course-info-grid" aria-label="Información del curso">
             <article>
               <span>Nivel</span>
-              <strong>{course.nivel || course.level || 'No definido'}</strong>
+              <strong>{formatLevel(course.nivel || course.level) || 'No definido'}</strong>
             </article>
             <article>
-              <span>Duracion</span>
+              <span>Duración</span>
               <strong>{course.duracion_estimada || 'No definida'}</strong>
             </article>
             <article>
-              <span>Categoria</span>
+              <span>Categoría</span>
               <strong>{course.categoria || course.category || 'General'}</strong>
             </article>
             <article>

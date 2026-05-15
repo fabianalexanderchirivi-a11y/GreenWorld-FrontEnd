@@ -35,3 +35,9 @@
   background: transparent;
   color: #b8f6df;
 }
+
+.btn-danger {
+  border-color: #c94343;
+  background: rgba(157, 37, 37, 0.18);
+  color: #ffd6d6;
+}

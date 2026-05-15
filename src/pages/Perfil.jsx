@@ -3,7 +3,7 @@ import usePageTitle from '../hooks/usePageTitle'
 import '../styles/admin.css'
 
 export default function Perfil() {
-  usePageTitle('Perfil | Green World')
+  usePageTitle('Perfil')
 
   return <UserAccountPanel mode="profile" />
 }

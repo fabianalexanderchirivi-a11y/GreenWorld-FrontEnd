@@ -7,6 +7,10 @@ const formatText = (text) => {
     return ''
   }
 
+  if (text.toLowerCase() === 'basico') {
+    return 'Básico'
+  }
+
   return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase()
 }
 

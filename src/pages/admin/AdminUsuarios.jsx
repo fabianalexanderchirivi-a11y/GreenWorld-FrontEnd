@@ -8,7 +8,7 @@ const formatRole = (role) => normalizeText(role) === 'admin' ? 'Admin' : 'Usuari
 const formatState = (state) => normalizeText(state) === 'inactivo' ? 'Inactivo' : 'Activo'
 
 export default function AdminUsuarios() {
-  usePageTitle('Usuarios Admin | Green World')
+  usePageTitle('Usuarios Admin')
 
   const [usuarios, setUsuarios] = useState([])
   const [loading, setLoading] = useState(true)

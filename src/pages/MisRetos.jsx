@@ -5,8 +5,12 @@ import usePageTitle from '../hooks/usePageTitle'
 import { resolveImage } from '../utils/imageResolver'
 import '../styles/admin.css'
 
+const formatDifficulty = (difficulty) => (
+  difficulty === 'Basico' || difficulty === 'basico' ? 'Básico' : difficulty
+)
+
 export default function MisRetos() {
-  usePageTitle('Mis Retos | Green World')
+  usePageTitle('Mis Retos')
 
   const [retos, setRetos] = useState([])
   const [loading, setLoading] = useState(true)
@@ -62,7 +66,7 @@ export default function MisRetos() {
       </div>
       <div className="user-progress-meta">
         <span>Estado: {reto.estado_progreso === 'terminado' ? 'Terminado' : 'En progreso'}</span>
-        <strong>{reto.dificultad || 'Basico'}</strong>
+        <strong>{formatDifficulty(reto.dificultad) || 'Básico'}</strong>
       </div>
       {reto.estado_progreso === 'en_progreso' ? (
         <div className="user-progress-actions">
@@ -84,39 +88,49 @@ export default function MisRetos() {
 
   return (
     <main className="admin-page">
-      <section className="admin-header">
-        <h1>Mis retos</h1>
-        <p>Consulta los retos que empezaste y los que ya completaste.</p>
-      </section>
+      <section className="profile-panel">
+        <aside className="profile-sidebar" aria-label="Menú personal">
+          <Link className="profile-nav-link" to="/panel-usuario">Inicio</Link>
+          <Link className="profile-nav-link" to="/mis-cursos">Mis cursos</Link>
+          <Link className="profile-nav-link is-active" to="/mis-retos">Mis retos</Link>
+        </aside>
 
-      {loading && <p className="admin-state">Cargando tus retos...</p>}
-      {error && <p className="admin-state admin-error">{error}</p>}
+        <section className="profile-main">
+          <section className="admin-header">
+            <h1>Mis retos</h1>
+            <p>Consulta los retos que empezaste y los que ya completaste.</p>
+          </section>
 
-      {!loading && !error && (
-        <section className="user-progress-layout">
-          <div className="user-progress-section">
-            <h2>Retos en progreso</h2>
-            {retosEnProgreso.length > 0 ? (
-              <div className="user-progress-grid">
-                {retosEnProgreso.map(renderRetoCard)}
+          {loading && <p className="admin-state">Cargando tus retos...</p>}
+          {error && <p className="admin-state admin-error">{error}</p>}
+
+          {!loading && !error && (
+            <section className="user-progress-layout">
+              <div className="user-progress-section">
+                <h2>Retos en progreso</h2>
+                {retosEnProgreso.length > 0 ? (
+                  <div className="user-progress-grid">
+                    {retosEnProgreso.map(renderRetoCard)}
+                  </div>
+                ) : (
+                  <p className="admin-state">No tienes retos en progreso todavía.</p>
+                )}
               </div>
-            ) : (
-              <p className="admin-state">No tienes retos en progreso todavia.</p>
-            )}
-          </div>
 
-          <div className="user-progress-section">
-            <h2>Retos terminados</h2>
-            {retosTerminados.length > 0 ? (
-              <div className="user-progress-grid">
-                {retosTerminados.map(renderRetoCard)}
+              <div className="user-progress-section">
+                <h2>Retos terminados</h2>
+                {retosTerminados.length > 0 ? (
+                  <div className="user-progress-grid">
+                    {retosTerminados.map(renderRetoCard)}
+                  </div>
+                ) : (
+                  <p className="admin-state">No tienes retos terminados todavía.</p>
+                )}
               </div>
-            ) : (
-              <p className="admin-state">No tienes retos terminados todavia.</p>
-            )}
-          </div>
+            </section>
+          )}
         </section>
-      )}
+      </section>
     </main>
   )
 }

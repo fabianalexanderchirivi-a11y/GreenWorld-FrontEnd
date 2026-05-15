@@ -1,8 +1,8 @@
 .main-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(210px, 1fr) auto minmax(210px, 1fr);
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
   gap: 14px;
   padding: 16px 0;
   border-bottom: 1px solid #0a584e;
@@ -49,6 +49,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+  justify-content: center;
 }
 
 .main-nav a {
@@ -74,6 +75,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  justify-content: flex-end;
 }
 
 .auth-user {
@@ -109,25 +111,6 @@
 .user-avatar svg {
   width: 20px;
   height: 20px;
-}
-
-.profile-menu-button {
-  border: 1px solid #1fb388;
-  border-radius: 999px;
-  padding: 9px 18px;
-  color: #05352f;
-  background-color: #4cd3a7;
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-}
-
-.profile-menu-button:hover,
-.profile-menu-button:focus-visible {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 20px rgba(6, 30, 24, 0.25);
-  outline: none;
 }
 
 .user-menu {
@@ -220,6 +203,7 @@
 
 @media (max-width: 640px) {
   .main-header {
+    display: flex;
     justify-content: center;
   }
 

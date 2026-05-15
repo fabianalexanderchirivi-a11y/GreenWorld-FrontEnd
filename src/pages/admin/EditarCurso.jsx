@@ -5,7 +5,7 @@ import usePageTitle from '../../hooks/usePageTitle'
 import '../../styles/admin.css'
 
 export default function EditarCurso() {
-  usePageTitle('Editar Curso | Green World')
+  usePageTitle('Editar Curso')
 
   const { id } = useParams()
   const navigate = useNavigate()
@@ -66,7 +66,7 @@ export default function EditarCurso() {
     <main className="admin-page">
       <section className="admin-header">
         <h1>Editar Curso</h1>
-        <p>Actualiza la informacion del curso seleccionado.</p>
+        <p>Actualiza la información del curso seleccionado.</p>
       </section>
 
       {!form && !error && <p className="admin-state">Cargando curso...</p>}
@@ -74,18 +74,18 @@ export default function EditarCurso() {
 
       {form && (
         <form className="admin-form" onSubmit={handleSubmit}>
-          <label>Titulo<input name="titulo" value={form.titulo} onChange={handleChange} required /></label>
-          <label>Descripcion<textarea name="descripcion" value={form.descripcion} onChange={handleChange} required /></label>
+          <label>Título<input name="titulo" value={form.titulo} onChange={handleChange} required /></label>
+          <label>Descripción<textarea name="descripcion" value={form.descripcion} onChange={handleChange} required /></label>
           <label>Imagen<input name="imagen" value={form.imagen} onChange={handleChange} /></label>
-          <label>Duracion estimada<input name="duracion_estimada" value={form.duracion_estimada} onChange={handleChange} /></label>
+          <label>Duración estimada<input name="duracion_estimada" value={form.duracion_estimada} onChange={handleChange} /></label>
           <label>Nivel
             <select name="nivel" value={form.nivel} onChange={handleChange}>
-              <option value="basico">basico</option>
+              <option value="basico">básico</option>
               <option value="intermedio">intermedio</option>
               <option value="avanzado">avanzado</option>
             </select>
           </label>
-          <label>Categoria<input name="categoria" value={form.categoria} onChange={handleChange} required /></label>
+          <label>Categoría<input name="categoria" value={form.categoria} onChange={handleChange} required /></label>
           <label>Estado
             <select name="estado" value={form.estado} onChange={handleChange}>
               <option value="publicado">publicado</option>

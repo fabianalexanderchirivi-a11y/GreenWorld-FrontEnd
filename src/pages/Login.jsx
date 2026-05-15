@@ -29,7 +29,7 @@ const GoogleIcon = () => (
 )
 
 export default function Login() {
-  usePageTitle('Iniciar sesión | Green World')
+  usePageTitle('Login')
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -91,7 +91,7 @@ export default function Login() {
       setError(
         loginError.response?.data?.message ||
         loginError.response?.data?.mensaje ||
-        'No se pudo iniciar sesion'
+        'No se pudo iniciar sesión'
       )
     } finally {
       setCargando(false)
@@ -122,11 +122,11 @@ export default function Login() {
 
         <article className="login-card">
           <h1>Bienvenido de nuevo</h1>
-          <p>Inicia sesion para empezar tu aventura</p>
+          <p>Inicia sesión para empezar tu aventura</p>
 
           <form className="login-form" noValidate onSubmit={iniciarSesion}>
             <label className="field-group" htmlFor="email">
-              <span>Correo electronico</span>
+              <span>Correo electrónico</span>
               <div className="field-shell">
                 <i className="field-icon"><MailIcon /></i>
                 <input
@@ -141,7 +141,7 @@ export default function Login() {
             </label>
 
             <label className="field-group" htmlFor="password">
-              <span>Contrasena</span>
+              <span>Contraseña</span>
               <div className="field-shell">
                 <i className="field-icon"><LockIcon /></i>
                 <input
@@ -169,7 +169,7 @@ export default function Login() {
             {error && <p className="login-error">{error}</p>}
 
             <button type="submit" className="btn btn-solid login-submit" disabled={cargando}>
-              {cargando ? 'Ingresando...' : 'Iniciar sesion'}
+              {cargando ? 'Ingresando...' : 'Iniciar sesión'}
             </button>
 
             <button type="button" className="login-google">
@@ -179,7 +179,7 @@ export default function Login() {
           </form>
 
           <p className="login-signup">
-            No tienes cuenta? <Link to="/register">Crear cuenta</Link>
+            ¿No tienes cuenta? <Link to="/register">Crear cuenta</Link>
           </p>
         </article>
       </section>

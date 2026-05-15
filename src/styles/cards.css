@@ -241,9 +241,14 @@
 }
 
 .courses-card-back p {
+  display: -webkit-box;
   margin: 0 0 18px;
+  overflow: hidden;
   color: #dcfff0;
-  line-height: 1.65;
+  line-height: 1.55;
+  text-align: center;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
 }
 
 .courses-card-meta,
@@ -272,6 +277,7 @@
   margin: 0 0 16px;
   color: #dcfff0;
   line-height: 1.65;
+  text-align: center;
 }
 
 .challenge-card-task {

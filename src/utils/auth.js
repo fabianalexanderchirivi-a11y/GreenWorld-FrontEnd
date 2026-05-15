@@ -20,6 +20,11 @@ export const getStoredToken = () => (
   localStorage.getItem('token') || sessionStorage.getItem('token')
 )
 
+export const setStoredUser = (usuario) => {
+  const storage = localStorage.getItem('usuario') ? localStorage : sessionStorage
+  storage.setItem('usuario', JSON.stringify(usuario))
+}
+
 export const clearSession = () => {
   localStorage.removeItem('token')
   localStorage.removeItem('usuario')

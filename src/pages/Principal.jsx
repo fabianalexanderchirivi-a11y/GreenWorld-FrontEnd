@@ -9,22 +9,22 @@ import Energy from '../img/Energy.webp'
 import '../styles/home.css'
 
 const highlightedCourses = [
-  { name: 'Reciclaje basico', icon: Bin },
-  { name: 'Energia y ahorro', icon: Energy },
+  { name: 'Reciclaje básico', icon: Bin },
+  { name: 'Energía y ahorro', icon: Energy },
   { name: 'Cuidado del agua', icon: Water },
-  { name: 'Conservacion', icon: World },
+  { name: 'Conservación', icon: World },
 ]
 
 export default function Principal() {
-  usePageTitle('Inicio | Green World')
+  usePageTitle('Inicio')
 
   return (
     <main className="home-base">
-      <section className="hero-base" aria-label="Seccion principal">
+      <section className="hero-base" aria-label="Sección principal">
         <article className="hero-content">
-          <h1>Aprende y actua por el planeta</h1>
+          <h1>Aprende y actúa por el planeta</h1>
           <p>
-            Convierte conocimiento en impacto real: aprende hoy y transforma tu entorno manana.
+            Convierte conocimiento en impacto real: aprende hoy y transforma tu entorno mañana.
           </p>
 
           <div className="hero-buttons">
@@ -34,7 +34,7 @@ export default function Principal() {
         </article>
 
         <aside className="hero-placeholder" aria-label="Espacio para imagen principal">
-          <img src={WorldGreen} id="World" alt="Ilustracion del planeta verde" />
+          <img src={WorldGreen} id="World" alt="Ilustración del planeta verde" />
         </aside>
       </section>
 
@@ -53,25 +53,25 @@ export default function Principal() {
         </div>
       </section>
 
-      <section className="mission-vision" aria-label="Mision y vision">
+      <section className="mission-vision" aria-label="Misión y visión">
         <div className="mission-vision-content">
           <article>
-            <h3>Mision</h3>
+            <h3>Misión</h3>
             <p>
-              Promover la educacion ambiental a traves de cursos accesibles y dinamicos que
+              Promover la educación ambiental a través de cursos accesibles y dinámicos que
               permitan a las personas comprender la importancia del cuidado del planeta.
-              Buscamos fomentar habitos sostenibles y acciones responsables
-              que contribuyan a la proteccion del medio ambiente y al bienestar de las futuras generaciones.
+              Buscamos fomentar hábitos sostenibles y acciones responsables
+              que contribuyan a la protección del medio ambiente y al bienestar de las futuras generaciones.
             </p>
           </article>
 
           <article>
-            <h3>Vision</h3>
+            <h3>Visión</h3>
             <p>
               Ser una plataforma educativa reconocida por inspirar a las personas a aprender, actuar
               y generar un impacto positivo en su entorno. Aspiramos a construir una comunidad
-              comprometida con la sostenibilidad y la conservacion del planeta mediante el
-              conocimiento y la participacion activa.
+              comprometida con la sostenibilidad y la conservación del planeta mediante el
+              conocimiento y la participación activa.
             </p>
           </article>
         </div>

@@ -25,7 +25,7 @@ const LockIcon = () => (
 )
 
 export default function Register() {
-  usePageTitle('Crear cuenta | Green World')
+  usePageTitle('Registro')
 
   const navigate = useNavigate()
 
@@ -75,17 +75,17 @@ export default function Register() {
     }
 
     if (formulario.contrasena !== formulario.confirmarContrasena) {
-      setError('Las contrasenas no coinciden')
+      setError('Las contraseñas no coinciden')
       return
     }
 
     if (formulario.contrasena.length < 8) {
-      setError('La contrasena debe tener minimo 8 caracteres')
+      setError('La contraseña debe tener mínimo 8 caracteres')
       return
     }
 
     if (!formulario.terms) {
-      setError('Debes aceptar los terminos y condiciones')
+      setError('Debes aceptar los términos y condiciones')
       return
     }
 
@@ -146,7 +146,7 @@ export default function Register() {
 
         <article className="login-card">
           <h1>Crea tu cuenta</h1>
-          <p>Registrate para aprender, participar y seguir tu progreso ambiental.</p>
+          <p>Regístrate para aprender, participar y seguir tu progreso ambiental.</p>
 
           <form className="login-form" noValidate onSubmit={registrarUsuario}>
             <div className="register-form-grid">
@@ -183,7 +183,7 @@ export default function Register() {
               </label>
 
               <label className="field-group field-group-full" htmlFor="registerEmail">
-                <span>Correo electronico</span>
+                <span>Correo electrónico</span>
                 <div className="field-shell">
                   <i className="field-icon"><MailIcon /></i>
                   <input
@@ -199,7 +199,7 @@ export default function Register() {
               </label>
 
               <label className="field-group" htmlFor="registerPassword">
-                <span>Contrasena</span>
+                <span>Contraseña</span>
                 <div className="field-shell">
                   <i className="field-icon"><LockIcon /></i>
                   <input
@@ -207,7 +207,7 @@ export default function Register() {
                     type="password"
                     name="contrasena"
                     autoComplete="new-password"
-                    placeholder="Minimo 8 caracteres"
+                    placeholder="Mínimo 8 caracteres"
                     value={formulario.contrasena}
                     onChange={manejarCambio}
                   />
@@ -215,7 +215,7 @@ export default function Register() {
               </label>
 
               <label className="field-group" htmlFor="confirmPassword">
-                <span>Confirmar contrasena</span>
+                <span>Confirmar contraseña</span>
                 <div className="field-shell">
                   <i className="field-icon"><LockIcon /></i>
                   <input
@@ -223,7 +223,7 @@ export default function Register() {
                     type="password"
                     name="confirmarContrasena"
                     autoComplete="new-password"
-                    placeholder="Repite tu contrasena"
+                    placeholder="Repite tu contraseña"
                     value={formulario.confirmarContrasena}
                     onChange={manejarCambio}
                   />
@@ -239,7 +239,7 @@ export default function Register() {
                 checked={formulario.terms}
                 onChange={manejarCambio}
               />
-              <span>Acepto los terminos y condiciones para crear mi cuenta.</span>
+              <span>Acepto los términos y condiciones para crear mi cuenta.</span>
             </label>
 
             {error && <p className="login-error">{error}</p>}
@@ -250,7 +250,7 @@ export default function Register() {
             </button>
 
             <p className="login-signup">
-              Ya tienes cuenta? <Link to="/login">Inicia sesion</Link>
+              ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
             </p>
           </form>
         </article>

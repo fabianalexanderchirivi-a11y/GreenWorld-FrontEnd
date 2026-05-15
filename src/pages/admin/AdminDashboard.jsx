@@ -22,23 +22,32 @@ const UsersIcon = () => (
   </svg>
 )
 
+const ClipboardIcon = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M9 2h6a2 2 0 0 1 1.73 1H19a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2.27A2 2 0 0 1 9 2Zm0 2v2h6V4H9ZM5 5v15h14V5h-2v3H7V5H5Zm3 7h8v1.7H8V12Zm0 4h6v1.7H8V16Z" fill="currentColor" />
+  </svg>
+)
+
 export default function AdminDashboard() {
-  usePageTitle('Panel Admin | Green World')
+  usePageTitle('Panel Admin')
 
   const [stats, setStats] = useState({
     cursos: null,
     retos: null,
-    usuarios: null
+    usuarios: null,
+    inscripciones: null
   })
 
   useEffect(() => {
     let mounted = true
 
     const cargarEstadisticas = async () => {
-      const [coursesResponse, retosResponse, usersResponse] = await Promise.allSettled([
+      const [coursesResponse, retosResponse, usersResponse, courseEnrollmentsResponse, challengeEnrollmentsResponse] = await Promise.allSettled([
         api.get('/courses/admin'),
         api.get('/retos/admin'),
-        api.get('/users')
+        api.get('/users'),
+        api.get('/admin/inscripciones/cursos'),
+        api.get('/admin/inscripciones/retos')
       ])
 
       if (!mounted) {
@@ -54,11 +63,18 @@ export default function AdminDashboard() {
       const users = usersResponse.status === 'fulfilled' && Array.isArray(usersResponse.value.data?.data)
         ? usersResponse.value.data.data
         : []
+      const courseEnrollments = courseEnrollmentsResponse.status === 'fulfilled' && Array.isArray(courseEnrollmentsResponse.value.data?.data)
+        ? courseEnrollmentsResponse.value.data.data
+        : []
+      const challengeEnrollments = challengeEnrollmentsResponse.status === 'fulfilled' && Array.isArray(challengeEnrollmentsResponse.value.data?.data)
+        ? challengeEnrollmentsResponse.value.data.data
+        : []
 
       setStats({
         cursos: courses.filter((course) => String(course.estado || '').toLowerCase() !== 'inactivo').length,
         retos: retos.filter((reto) => String(reto.estado || '').toLowerCase() !== 'inactivo').length,
-        usuarios: users.length
+        usuarios: users.length,
+        inscripciones: courseEnrollments.length + challengeEnrollments.length
       })
     }
 
@@ -81,7 +97,7 @@ export default function AdminDashboard() {
           <span className="admin-action-icon"><BookIcon /></span>
           <span className="admin-action-content">
             <strong>Cursos</strong>
-            <small>Gestiona el catalogo de cursos ambientales.</small>
+            <small>Gestiona el catálogo de cursos ambientales.</small>
             <em>{stats.cursos ?? '-'} cursos activos</em>
           </span>
         </Link>
@@ -99,6 +115,14 @@ export default function AdminDashboard() {
             <strong>Usuarios</strong>
             <small>Consulta usuarios registrados y estados.</small>
             <em>{stats.usuarios ?? '-'} usuarios registrados</em>
+          </span>
+        </Link>
+        <Link to="/admin/inscripciones" className="admin-action">
+          <span className="admin-action-icon"><ClipboardIcon /></span>
+          <span className="admin-action-content">
+            <strong>Inscripciones</strong>
+            <small>Revisa avances y participaciones de usuarios.</small>
+            <em>{stats.inscripciones ?? '-'} registros</em>
           </span>
         </Link>
       </section>

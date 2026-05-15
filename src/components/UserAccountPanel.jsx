@@ -37,6 +37,9 @@ const getCreationDate = (usuario) => {
 
 const getTitle = (item, fallback) => item?.titulo || item?.name || fallback
 const getItemImage = (item) => resolveImage(item?.imagen || item?.imagen_url || item?.image)
+const formatDifficulty = (difficulty) => (
+  difficulty === 'Basico' || difficulty === 'basico' ? 'Básico' : difficulty
+)
 const getEstadoText = (item) => {
   if (item?.estado_progreso === 'terminado') {
     return 'Terminado'
@@ -166,10 +169,10 @@ export default function UserAccountPanel({ mode = 'panel' }) {
         <section className="profile-main">
           <div className="profile-heading">
             <h1>{isProfile ? 'Perfil' : `Hola, ${usuario?.nombre || 'Usuario'}`}</h1>
-            <p>{isProfile ? 'Organiza tu informacion y revisa tu avance.' : 'Este es tu resumen general en GreenWorld.'}</p>
+            <p>{isProfile ? 'Organiza tu información y revisa tu avance.' : 'Este es tu resumen general en GreenWorld.'}</p>
           </div>
 
-          <section className="profile-hero" aria-label="Informacion del usuario">
+          <section className="profile-hero" aria-label="Información del usuario">
             <div className="profile-avatar">
               <UserIcon />
             </div>
@@ -178,6 +181,13 @@ export default function UserAccountPanel({ mode = 'panel' }) {
               {usuario?.correo && <p className="profile-email">{usuario.correo}</p>}
               {fechaCreacion && <p className="profile-created">Cuenta creada el {fechaCreacion}</p>}
             </div>
+            {!isProfile && (
+              <div className="profile-user-actions">
+                <Link className="profile-item-action profile-edit-action" to="/editar-perfil">
+                  Editar perfil
+                </Link>
+              </div>
+            )}
           </section>
 
           {loading && <p className="admin-state">Cargando tu actividad...</p>}
@@ -208,7 +218,7 @@ export default function UserAccountPanel({ mode = 'panel' }) {
                 <ProgressSection
                   title="Cursos en progreso"
                   items={cursosEnProgreso}
-                  emptyMessage="No tienes cursos en progreso todavia."
+                  emptyMessage="No tienes cursos en progreso todavía."
                   detailResolver={(course) => `${Number(course.porcentaje_avance || 0)}% de avance`}
                   actionLabel="Continuar"
                   actionTo="/mis-cursos"
@@ -218,14 +228,14 @@ export default function UserAccountPanel({ mode = 'panel' }) {
                 <ProgressSection
                   title="Cursos terminados"
                   items={cursosTerminados}
-                  emptyMessage="No tienes cursos terminados todavia."
+                  emptyMessage="No tienes cursos terminados todavía."
                   detailResolver={(course) => `${Number(course.porcentaje_avance || 100)}% de avance`}
                 />
                 <ProgressSection
                   title="Retos en progreso"
                   items={retosEnProgreso}
-                  emptyMessage="No tienes retos en progreso todavia."
-                  detailResolver={(reto) => reto.dificultad || 'En progreso'}
+                  emptyMessage="No tienes retos en progreso todavía."
+                  detailResolver={(reto) => formatDifficulty(reto.dificultad) || 'En progreso'}
                   actionLabel="Ver reto"
                   actionTo="/mis-retos"
                   emptyActionLabel="Ver retos disponibles"
@@ -234,7 +244,7 @@ export default function UserAccountPanel({ mode = 'panel' }) {
                 <ProgressSection
                   title="Retos terminados"
                   items={retosTerminados}
-                  emptyMessage="No tienes retos terminados todavia."
+                  emptyMessage="No tienes retos terminados todavía."
                   detailResolver={() => 'Terminado'}
                 />
               </section>

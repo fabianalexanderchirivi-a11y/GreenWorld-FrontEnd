@@ -397,6 +397,7 @@
 .profile-hero {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 22px;
   padding: 22px;
   border: 1px solid rgba(12, 96, 79, 0.72);
@@ -428,9 +429,27 @@
   font-size: clamp(1.35rem, 3vw, 2rem);
 }
 
+.profile-user-info {
+  flex: 1;
+  min-width: 0;
+}
+
 .profile-user-info p {
   margin: 6px 0 0;
   line-height: 1.5;
+}
+
+.profile-user-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+.profile-edit-action {
+  margin-top: 0;
+  padding: 9px 16px;
+  white-space: nowrap;
 }
 
 .profile-email {
@@ -566,6 +585,114 @@
   justify-items: start;
 }
 
+.page-back-button {
+  margin-bottom: 16px;
+}
+
+.admin-tabs {
+  display: inline-flex;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 6px;
+  border: 1px solid rgba(91, 231, 184, 0.24);
+  border-radius: 999px;
+  background: rgba(3, 27, 22, 0.82);
+}
+
+.admin-tabs button {
+  min-width: 96px;
+  height: 40px;
+  border: 0;
+  border-radius: 999px;
+  color: #9be6c7;
+  background: transparent;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-tabs button.is-active,
+.admin-tabs button:hover,
+.admin-tabs button:focus-visible {
+  color: #eafff5;
+  background: rgba(91, 231, 184, 0.14);
+  outline: none;
+}
+
+.admin-table-enrollments {
+  grid-template-columns:
+    minmax(150px, 1fr)
+    minmax(180px, 1.1fr)
+    minmax(180px, 1.1fr)
+    minmax(120px, 0.7fr)
+    minmax(90px, 0.5fr)
+    minmax(120px, 0.7fr)
+    minmax(130px, 0.8fr)
+    minmax(140px, 0.8fr);
+}
+
+.admin-detail-panel,
+.profile-danger-zone {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid rgba(12, 96, 79, 0.72);
+  border-radius: 8px;
+  background: rgba(3, 27, 22, 0.82);
+}
+
+.admin-detail-panel h2,
+.profile-danger-zone h3 {
+  margin: 0 0 6px;
+}
+
+.admin-detail-panel p,
+.profile-danger-zone p {
+  margin: 0;
+}
+
+.admin-detail-panel dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+
+.admin-detail-panel div {
+  display: grid;
+  gap: 4px;
+}
+
+.admin-detail-panel dt {
+  color: #8fd8b9;
+  font-weight: 700;
+}
+
+.admin-detail-panel dd {
+  margin: 0;
+}
+
+.profile-danger-zone {
+  border-color: rgba(201, 67, 67, 0.34);
+  background: rgba(48, 16, 16, 0.58);
+}
+
+.profile-danger-zone h3,
+.admin-detail-panel h2 {
+  color: #effff7;
+}
+
+.profile-danger-zone p,
+.admin-detail-panel dd {
+  color: #abebcf;
+}
+
+.profile-danger-error {
+  color: #ffd6d6;
+  font-weight: 700;
+}
+
 @media (max-width: 760px) {
   .admin-header-row {
     align-items: flex-start;
@@ -573,7 +700,8 @@
   }
 
   .admin-table-row,
-  .admin-table-four {
+  .admin-table-four,
+  .admin-table-enrollments {
     min-width: 720px;
   }
 
@@ -592,6 +720,12 @@
   .profile-hero {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .profile-user-actions {
+    justify-content: flex-start;
+    width: 100%;
+    margin-left: 0;
   }
 
   .profile-stats,

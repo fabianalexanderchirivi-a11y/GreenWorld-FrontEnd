@@ -13,9 +13,10 @@ const getCourseLevel = (course) => course.level || course.nivel || ''
 const getCourseCategory = (course) => course.category || course.categoria || 'General'
 
 export default function Cursos() {
-  usePageTitle('Cursos | Green World')
+  usePageTitle('Cursos')
 
   const navigate = useNavigate()
+  const hasSession = Boolean(getStoredToken())
   const [courses, setCourses] = useState([])
   const [courseProgress, setCourseProgress] = useState({})
   const [loading, setLoading] = useState(true)
@@ -75,8 +76,8 @@ export default function Cursos() {
   )
 
   const getActionLabel = (course) => {
-    if (!getStoredToken()) {
-      return 'Iniciar sesion para empezar'
+    if (!hasSession) {
+      return 'Iniciar sesión para empezar'
     }
 
     const estado = getCourseState(course)
@@ -95,7 +96,7 @@ export default function Cursos() {
   const handleCourseAction = async (course) => {
     const idCurso = getCourseId(course)
 
-    if (!getStoredToken()) {
+    if (!hasSession) {
       navigate('/login')
       return
     }
@@ -151,6 +152,7 @@ export default function Cursos() {
 
       return getCourseName(firstCourse).localeCompare(getCourseName(secondCourse))
     }), [category, courses, search, sortBy])
+  const visibleCourses = hasSession ? filteredCourses : filteredCourses.slice(0, 4)
 
   return (
     <main className="courses-page">
@@ -158,8 +160,8 @@ export default function Cursos() {
         <div className="courses-hero-content">
           <h1>APRENDE CON IMPACTO</h1>
           <p>
-            Explora contenidos practicos sobre sostenibilidad, cuidado del planeta y acciones
-            que puedes aplicar en tu dia a dia.
+            Explora contenidos prácticos sobre sostenibilidad, cuidado del planeta y acciones
+            que puedes aplicar en tu día a día.
           </p>
         </div>
       </section>
@@ -176,7 +178,7 @@ export default function Cursos() {
         </label>
 
         <label className="courses-control">
-          <span>Categorias</span>
+          <span>Categorías</span>
           <select value={category} onChange={(event) => setCategory(event.target.value)}>
             {allCategories.map((option) => (
               <option key={option} value={option}>{option}</option>
@@ -188,7 +190,7 @@ export default function Cursos() {
           <span>Ordenar</span>
           <select value={sortBy} onChange={(event) => setSortBy(event.target.value)}>
             <option value="name">Nombre</option>
-            <option value="category">Categoria</option>
+            <option value="category">Categoría</option>
             <option value="level">Dificultad</option>
           </select>
         </label>
@@ -196,7 +198,7 @@ export default function Cursos() {
 
       <section className="courses-results">
         <div className="courses-results-header">
-          <h2>Catalogo de cursos</h2>
+          <h2>Catálogo de cursos</h2>
           <p>{filteredCourses.length} cursos disponibles</p>
         </div>
 
@@ -205,25 +207,35 @@ export default function Cursos() {
         {!loading && actionError && <p className="courses-state courses-state-error">{actionError}</p>}
         {!loading && !error && filteredCourses.length === 0 && (
           <p className="courses-state">
-            No encontramos cursos con esos filtros o aun no hay cursos activos.
+            No encontramos cursos con esos filtros o aún no hay cursos activos.
           </p>
         )}
         {!loading && !error && filteredCourses.length > 0 && (
-          <div className="courses-grid">
-            {filteredCourses.map((course) => (
-              <CourseCard
-                key={getCourseId(course)}
-                course={course}
-                actionLabel={startingCourseId === getCourseId(course) ? 'Iniciando...' : getActionLabel(course)}
-                actionDisabled={
-                  startingCourseId === getCourseId(course) ||
-                  getCourseState(course) === 'terminado'
-                }
-                onAction={() => handleCourseAction(course)}
-                detailsTo={`/cursos/${getCourseId(course)}`}
-              />
-            ))}
-          </div>
+          <>
+            <div className="courses-grid">
+              {visibleCourses.map((course) => (
+                <CourseCard
+                  key={getCourseId(course)}
+                  course={course}
+                  actionLabel={startingCourseId === getCourseId(course) ? 'Iniciando...' : getActionLabel(course)}
+                  actionDisabled={
+                    startingCourseId === getCourseId(course) ||
+                    getCourseState(course) === 'terminado'
+                  }
+                  onAction={() => handleCourseAction(course)}
+                  detailsTo={`/cursos/${getCourseId(course)}`}
+                />
+              ))}
+            </div>
+            {!hasSession && filteredCourses.length > visibleCourses.length && (
+              <div className="catalog-preview-cta">
+                <p>Inicia sesión para ver todos los cursos disponibles.</p>
+                <button type="button" className="btn btn-solid" onClick={() => navigate('/login')}>
+                  Ver más
+                </button>
+              </div>
+            )}
+          </>
         )}
       </section>
 

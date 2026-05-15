@@ -62,9 +62,6 @@ export default function MainHeader() {
       return (
         <>
           <NavLink to="/admin">Panel Admin</NavLink>
-          <NavLink to="/admin/cursos">Cursos Admin</NavLink>
-          <NavLink to="/admin/retos">Retos Admin</NavLink>
-          <NavLink to="/admin/usuarios">Usuarios</NavLink>
         </>
       )
     }
@@ -88,7 +85,7 @@ export default function MainHeader() {
         <span className="brand-text">World</span>
       </Link>
 
-      <nav className="main-nav" aria-label="Navegacion principal">
+      <nav className="main-nav" aria-label="Navegación principal">
         {renderNavLinks()}
       </nav>
 
@@ -114,11 +111,8 @@ export default function MainHeader() {
               </div>
               {!esAdmin && (
                 <>
-                  <Link className="user-menu-link" role="menuitem" to="/perfil" onClick={() => setMenuUsuarioAbierto(false)}>
-                    Mi perfil
-                  </Link>
-                  <Link className="user-menu-link" role="menuitem" to="/panel-usuario" onClick={() => setMenuUsuarioAbierto(false)}>
-                    Panel usuario
+                  <Link className="user-menu-link" role="menuitem" to="/editar-perfil" onClick={() => setMenuUsuarioAbierto(false)}>
+                    Editar perfil
                   </Link>
                 </>
               )}
@@ -127,13 +121,10 @@ export default function MainHeader() {
                   <Link className="user-menu-link" role="menuitem" to="/admin" onClick={() => setMenuUsuarioAbierto(false)}>
                     Panel Admin
                   </Link>
-                  <Link className="user-menu-link" role="menuitem" to="/admin/usuarios" onClick={() => setMenuUsuarioAbierto(false)}>
-                    Usuarios
-                  </Link>
                 </>
               )}
               <button type="button" className="user-menu-logout" role="menuitem" onClick={cerrarSesion}>
-                Cerrar sesion
+                Cerrar sesión
               </button>
             </div>
           )}
@@ -141,7 +132,7 @@ export default function MainHeader() {
       ) : (
         <div className="auth-actions">
           <Link to="/register" className="btn btn-outline">Registrarse</Link>
-          <Link to="/login" className="btn btn-solid">Iniciar sesion</Link>
+          <Link to="/login" className="btn btn-solid">Iniciar sesión</Link>
         </div>
       )}
     </header>

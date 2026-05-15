@@ -12,9 +12,12 @@ const getProgressLabel = (estado) => {
   if (estado === 'en_progreso') return 'En progreso'
   return 'Sin iniciar'
 }
+const formatDifficulty = (difficulty) => (
+  difficulty === 'Basico' || difficulty === 'basico' ? 'Básico' : difficulty
+)
 
 export default function RetoDetalle() {
-  usePageTitle('Detalle de reto | Green World')
+  usePageTitle('Detalle de reto')
 
   const { id } = useParams()
   const navigate = useNavigate()
@@ -130,8 +133,8 @@ export default function RetoDetalle() {
           <p>{reto.descripcion || reto.description}</p>
           {reto.objetivo && <p><strong>Objetivo:</strong> {reto.objetivo}</p>}
           <div className="detail-meta">
-            <span>Categoria: {reto.categoria || reto.category || 'General'}</span>
-            <span>Dificultad: {reto.dificultad || reto.difficulty || 'No definida'}</span>
+            <span>Categoría: {reto.categoria || reto.category || 'General'}</span>
+            <span>Dificultad: {formatDifficulty(reto.dificultad || reto.difficulty) || 'No definida'}</span>
             <span>Estado: {getProgressLabel(estado)}</span>
           </div>
           <div className="detail-actions">

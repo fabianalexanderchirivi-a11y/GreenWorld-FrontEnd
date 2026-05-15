@@ -11,11 +11,15 @@ const getChallengeId = (challenge) => challenge.id || challenge.id_reto
 const getChallengeName = (challenge) => challenge.name || challenge.titulo || ''
 const getChallengeCategory = (challenge) => challenge.category || challenge.categoria || 'General'
 const getChallengeDifficulty = (challenge) => challenge.difficulty || challenge.dificultad || 'Basico'
+const formatDifficulty = (difficultyValue) => (
+  difficultyValue === 'Basico' || difficultyValue === 'basico' ? 'Básico' : difficultyValue
+)
 
 export default function Retos() {
-  usePageTitle('Retos | Green World')
+  usePageTitle('Retos')
 
   const navigate = useNavigate()
+  const hasSession = Boolean(getStoredToken())
   const [challenges, setChallenges] = useState([])
   const [challengeProgress, setChallengeProgress] = useState({})
   const [loading, setLoading] = useState(true)
@@ -101,14 +105,15 @@ export default function Retos() {
 
       return getChallengeName(firstChallenge).localeCompare(getChallengeName(secondChallenge))
     }), [category, challenges, difficulty, search, sortBy])
+  const visibleChallenges = hasSession ? filteredChallenges : filteredChallenges.slice(0, 4)
 
   const getChallengeState = (challenge) => (
     challengeProgress[getChallengeId(challenge)]?.estado_progreso || 'sin_iniciar'
   )
 
   const getActionLabel = (challenge) => {
-    if (!getStoredToken()) {
-      return 'Iniciar sesion para participar'
+    if (!hasSession) {
+      return 'Iniciar sesión para participar'
     }
 
     const estado = getChallengeState(challenge)
@@ -127,7 +132,7 @@ export default function Retos() {
   const handleChallengeAction = async (challenge) => {
     const idReto = getChallengeId(challenge)
 
-    if (!getStoredToken()) {
+    if (!hasSession) {
       navigate('/login')
       return
     }
@@ -166,7 +171,7 @@ export default function Retos() {
         <div className="challenges-hero-content">
           <h1>RETOS SOSTENIBLES</h1>
           <p>
-            Pon en practica acciones ecologicas simples, fortalece tus habitos y genera
+            Pon en práctica acciones ecológicas simples, fortalece tus hábitos y genera
             impacto positivo desde tu rutina diaria.
           </p>
         </div>
@@ -184,7 +189,7 @@ export default function Retos() {
         </label>
 
         <label className="challenges-control">
-          <span>Categorias</span>
+          <span>Categorías</span>
           <select value={category} onChange={(event) => setCategory(event.target.value)}>
             {allCategories.map((option) => (
               <option key={option} value={option}>{option}</option>
@@ -196,7 +201,7 @@ export default function Retos() {
           <span>Dificultad</span>
           <select value={difficulty} onChange={(event) => setDifficulty(event.target.value)}>
             {allDifficulties.map((option) => (
-              <option key={option} value={option}>{option}</option>
+              <option key={option} value={option}>{formatDifficulty(option)}</option>
             ))}
           </select>
         </label>
@@ -205,7 +210,7 @@ export default function Retos() {
           <span>Ordenar</span>
           <select value={sortBy} onChange={(event) => setSortBy(event.target.value)}>
             <option value="name">Nombre</option>
-            <option value="category">Categoria</option>
+            <option value="category">Categoría</option>
             <option value="difficulty">Dificultad</option>
           </select>
         </label>
@@ -220,25 +225,35 @@ export default function Retos() {
         {loading && <p className="challenges-empty">Cargando retos...</p>}
         {!loading && error && <p className="challenges-empty">{error}</p>}
         {!loading && !error && filteredChallenges.length > 0 ? (
-          <div className="challenges-grid">
-            {filteredChallenges.map((challenge) => (
-              <ChallengeCard
-                key={getChallengeId(challenge)}
-                challenge={challenge}
-                actionLabel={startingChallengeId === getChallengeId(challenge) ? 'Iniciando...' : getActionLabel(challenge)}
-                actionDisabled={
-                  startingChallengeId === getChallengeId(challenge) ||
-                  getChallengeState(challenge) === 'terminado'
-                }
-                onAction={() => handleChallengeAction(challenge)}
-                detailsTo={`/retos/${getChallengeId(challenge)}`}
-              />
-            ))}
-          </div>
+          <>
+            <div className="challenges-grid">
+              {visibleChallenges.map((challenge) => (
+                <ChallengeCard
+                  key={getChallengeId(challenge)}
+                  challenge={challenge}
+                  actionLabel={startingChallengeId === getChallengeId(challenge) ? 'Iniciando...' : getActionLabel(challenge)}
+                  actionDisabled={
+                    startingChallengeId === getChallengeId(challenge) ||
+                    getChallengeState(challenge) === 'terminado'
+                  }
+                  onAction={() => handleChallengeAction(challenge)}
+                  detailsTo={`/retos/${getChallengeId(challenge)}`}
+                />
+              ))}
+            </div>
+            {!hasSession && filteredChallenges.length > visibleChallenges.length && (
+              <div className="catalog-preview-cta">
+                <p>Inicia sesión para ver todos los retos disponibles.</p>
+                <button type="button" className="btn btn-solid" onClick={() => navigate('/login')}>
+                  Ver más
+                </button>
+              </div>
+            )}
+          </>
         ) : null}
         {!loading && !error && filteredChallenges.length === 0 && (
           <p className="challenges-empty">
-            No encontramos retos con esos filtros o aun no hay retos activos.
+            No encontramos retos con esos filtros o aún no hay retos activos.
           </p>
         )}
       </section>

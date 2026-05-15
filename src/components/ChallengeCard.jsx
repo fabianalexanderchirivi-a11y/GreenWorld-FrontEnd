@@ -2,11 +2,15 @@ import '../styles/cards.css'
 import { Link } from 'react-router-dom'
 import { resolveImage } from '../utils/imageResolver'
 
+const formatDifficulty = (difficulty) => (
+  difficulty === 'Basico' || difficulty === 'basico' ? 'Básico' : difficulty
+)
+
 export default function ChallengeCard({ challenge, actionLabel, actionDisabled = false, onAction, detailsTo }) {
   const name = challenge.name || challenge.titulo
   const description = challenge.description || challenge.descripcion
   const objective = challenge.objective || challenge.objetivo
-  const difficulty = challenge.difficulty || challenge.dificultad
+  const difficulty = formatDifficulty(challenge.difficulty || challenge.dificultad)
   const category = challenge.category || challenge.categoria || 'General'
   const status = challenge.status || challenge.estado || 'Disponible'
   const image = resolveImage(challenge.image || challenge.imagen)
@@ -43,7 +47,7 @@ export default function ChallengeCard({ challenge, actionLabel, actionDisabled =
       <div className="challenge-card-face challenge-card-back">
         <p>{description}</p>
         <div className="challenge-card-task">
-          <span>Que debes hacer</span>
+          <span>Qué debes hacer</span>
           <strong>{objective}</strong>
         </div>
         <button

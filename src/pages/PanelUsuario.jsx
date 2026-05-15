@@ -3,7 +3,7 @@ import usePageTitle from '../hooks/usePageTitle'
 import '../styles/admin.css'
 
 export default function PanelUsuario() {
-  usePageTitle('Panel Usuario | Green World')
+  usePageTitle('Panel Usuario')
 
   return <UserAccountPanel mode="panel" />
 }

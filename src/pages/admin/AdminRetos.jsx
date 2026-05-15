@@ -14,9 +14,12 @@ const initialForm = {
 }
 
 const getRetoId = (reto) => reto.id_reto || reto.id
+const formatDifficulty = (difficulty) => (
+  difficulty === 'Basico' || difficulty === 'basico' ? 'Básico' : difficulty
+)
 
 export default function AdminRetos() {
-  usePageTitle('Retos Admin | Green World')
+  usePageTitle('Retos Admin')
 
   const [retos, setRetos] = useState([])
   const [form, setForm] = useState(initialForm)
@@ -101,7 +104,7 @@ export default function AdminRetos() {
   }
 
   const desactivarReto = async (id) => {
-    if (!window.confirm('Seguro que deseas desactivar este reto?')) {
+    if (!window.confirm('¿Seguro que deseas desactivar este reto?')) {
       return
     }
 
@@ -131,17 +134,17 @@ export default function AdminRetos() {
 
       {showForm && (
         <form className="admin-form" onSubmit={guardarReto}>
-          <label>Titulo<input name="titulo" value={form.titulo} onChange={handleChange} required /></label>
-          <label>Descripcion<textarea name="descripcion" value={form.descripcion} onChange={handleChange} required /></label>
+          <label>Título<input name="titulo" value={form.titulo} onChange={handleChange} required /></label>
+          <label>Descripción<textarea name="descripcion" value={form.descripcion} onChange={handleChange} required /></label>
           <label>Objetivo<textarea name="objetivo" value={form.objetivo} onChange={handleChange} /></label>
           <label>Dificultad
             <select name="dificultad" value={form.dificultad} onChange={handleChange}>
-              <option>Basico</option>
-              <option>Intermedio</option>
-              <option>Avanzado</option>
+              <option value="Basico">Básico</option>
+              <option value="Intermedio">Intermedio</option>
+              <option value="Avanzado">Avanzado</option>
             </select>
           </label>
-          <label>Categoria<input name="categoria" value={form.categoria} onChange={handleChange} /></label>
+          <label>Categoría<input name="categoria" value={form.categoria} onChange={handleChange} /></label>
           <label>
             Imagen o nombre de archivo
             <input name="imagen" value={form.imagen} onChange={handleChange} placeholder="Ejemplo: Residue.webp o https://..." />
@@ -177,8 +180,8 @@ export default function AdminRetos() {
         <div className="admin-table-wrap">
           <div className="admin-table" role="table" aria-label="Retos">
           <div className="admin-table-row admin-table-head" role="row">
-            <span>Titulo</span>
-            <span>Categoria</span>
+            <span>Título</span>
+            <span>Categoría</span>
             <span>Dificultad</span>
             <span>Estado</span>
             <span>Acciones</span>
@@ -187,7 +190,7 @@ export default function AdminRetos() {
             <div className="admin-table-row" role="row" key={getRetoId(reto)}>
               <span>{reto.titulo || reto.name}</span>
               <span>{reto.categoria || reto.category || 'General'}</span>
-              <span>{reto.dificultad || reto.difficulty}</span>
+              <span>{formatDifficulty(reto.dificultad || reto.difficulty)}</span>
               <span>{reto.estado || 'activo'}</span>
               <span className="admin-row-actions">
                 <button type="button" className="btn btn-outline" onClick={() => editarReto(reto)}>Editar</button>
