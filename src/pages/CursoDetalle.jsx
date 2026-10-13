@@ -31,6 +31,7 @@ export default function CursoDetalle() {
   const [modules, setModules] = useState([])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [downloading, setDownloading] = useState(false)
   const [error, setError] = useState('')
 
   const estado = progress?.estado_progreso || 'sin_iniciar'
@@ -143,6 +144,40 @@ export default function CursoDetalle() {
     }
   }
 
+  const downloadCertificate = async () => {
+    if (!getStoredToken()) {
+      navigate('/login')
+      return
+    }
+
+    setDownloading(true)
+    setError('')
+
+    try {
+      const issued = await api.post(`/cursos/${id}/certificado`)
+      const certificateId = issued.data?.data?.id_certificado
+      if (!certificateId) throw new Error('El certificado no tiene identificador')
+
+      const response = await api.get(`/certificados/${certificateId}/descargar`, { responseType: 'blob' })
+      if (!response.headers['content-type']?.includes('application/pdf')) {
+        throw new Error('La descarga no devolvió un PDF')
+      }
+
+      const url = URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }))
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `greenworld-certificado-${certificateId}.pdf`
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000)
+    } catch (certificateError) {
+      setError(certificateError.response?.data?.message || certificateError.message || 'No se pudo descargar el certificado')
+    } finally {
+      setDownloading(false)
+    }
+  }
+
   if (loading) {
     return <main className="detail-page"><p className="admin-state">Cargando curso...</p></main>
   }
@@ -195,7 +230,14 @@ export default function CursoDetalle() {
                     <button type="button" className="btn btn-outline" disabled={saving} onClick={cancelCourse}>Cancelar curso</button>
                   </>
                 )}
-                {estado === 'terminado' && <span className="user-progress-badge">Curso terminado</span>}
+                {estado === 'terminado' && (
+                  <>
+                    <span className="user-progress-badge">Curso terminado</span>
+                    <button type="button" className="btn btn-solid" disabled={downloading} onClick={downloadCertificate}>
+                      {downloading ? 'Descargando...' : 'Descargar certificado'}
+                    </button>
+                  </>
+                )}
               </div>
             </div>
             <div className="course-main-image">

@@ -1,16 +1,30 @@
-# React + Vite
+# Green World — frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación React/Vite de Green World, conectada a [GreenWorld-BackEnd](https://github.com/fabianalexanderchirivi-a11y/GreenWorld-BackEnd). Incluye inicio de sesión, cursos, progreso y descarga de certificados PDF autenticada.
 
-Currently, two official plugins are available:
+## Ejecución local
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Requiere Node.js/npm y la API real con su base SQL Server configurada.
 
-## React Compiler
+```powershell
+npm ci
+Copy-Item .env.example .env
+npm run dev -- --host 127.0.0.1 --port 5173 --strictPort
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Vite publica `http://127.0.0.1:5173` y envía `/api` a `http://localhost:4000`. El ejemplo de configuración solo contiene la URL de API; añade credenciales de prueba mediante variables de entorno locales cuando ejecutes Cypress.
 
-## Expanding the ESLint configuration
+## Validación
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```powershell
+npm run build
+npm run lint
+$env:CYPRESS_USER_EMAIL = Read-Host 'Correo de la cuenta de prueba'
+$env:CYPRESS_USER_PASSWORD = Read-Host -MaskInput 'Contraseña de la cuenta de prueba'
+$env:CYPRESS_NO_COMMAND_LOG = '1'
+npm run cy:run -- --spec 'cypress/e2e/ppi/*.cy.js'
+```
+
+Los ocho casos oficiales necesitan frontend, backend y SQL Server reales. La cuenta debe tener cursos publicados sin iniciar y un curso terminado para el caso de certificado. Dos casos dejan cursos terminados; para repetirlos prepara otra cuenta controlada o suficientes cursos disponibles. Las capturas y videos quedan en `cypress/evidence/`, y los PDF descargados en `cypress/downloads/`; ambas carpetas se mantienen locales.
+
+Consulta [el estado de validación y sus limitaciones](docs/VALIDACION-PPI.md). La última regresión real, del 9 de octubre de 2026, aprobó 8/8 casos. El criterio de finalización por actividades de GW-02/GW-09 sigue pendiente de confirmación.
